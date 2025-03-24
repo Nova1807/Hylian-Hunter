@@ -1,0 +1,7 @@
+{
+  "name": "Hylian-Hunter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
