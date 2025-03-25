@@ -6,12 +6,17 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let monster of monsters">
+
+
       <ion-label>
         <h2>{{ monster.name }}</h2>
+        <img [src]="'../assets/Monster-Images/' + monster.name + '.png'"
+
+             class="monster-image"
+        />
         <p><strong>Beschreibung:</strong> {{ monster.description }}</p>
         <p><strong>Spezies:</strong> {{ monster.species }}</p>
 
-        <!-- Zeigt Elemente nur an, wenn vorhanden -->
         <p *ngIf="monster.elements?.length > 0"><strong>Elemente:</strong> {{ monster.elements?.join(', ') }}</p>
 
         <p *ngIf="monster.weaknesses?.length > 0"><strong>Schwächen:</strong>
@@ -20,7 +25,6 @@
           </span>
         </p>
 
-        <!-- Schwächen nach Effektivität sortiert anzeigen -->
         <ul>
           <li *ngFor="let weakness of monster.weaknesses">
             {{ weakness.element }} - Effektivität: {{ weakness.stars }}
