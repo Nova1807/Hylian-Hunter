@@ -18,4 +18,8 @@ export class MonsterHunterApiService {
   getMonsterById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/monsters/${id}`);
   }
+  getAllWeapons(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/weapons`);
+  }
+
 }
