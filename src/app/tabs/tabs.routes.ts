@@ -12,9 +12,9 @@ export const routes: Routes = [
           import('../Monster-Hunter/Monster-Hunter.page').then((m) => m.MonsterHunterPage),
       },
       {
-        path: 'tab2',
+        path: 'LOZ',
         loadComponent: () =>
-          import('../tab2/tab2.page').then((m) => m.Tab2Page),
+          import('../LOZ/LOZ.page').then((m) => m.LOZPage),
       },
       {
         path: 'tab3',
