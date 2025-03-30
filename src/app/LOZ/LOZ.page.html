@@ -1,18 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title>Monster</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-item *ngFor="loadMonsters()"></ion-item>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-list>
+    <ion-item *ngFor="let monster of monsters">
+      <ion-label>
+        <h2>{{ monster.name }}</h2>
+        <p>{{ monster.description }}</p>
+      </ion-label>
+      <ion-thumbnail slot="end">
+        <img [src]="monster.image" alt="{{ monster.name }}" />
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
 </ion-content>
