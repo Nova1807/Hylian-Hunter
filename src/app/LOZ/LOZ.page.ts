@@ -8,7 +8,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonThumbnail
+  IonThumbnail, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,7 +21,7 @@ import { LOZApiService } from '../LOZ.api/LOZ.api.service';
   standalone: true,
   imports: [
     CommonModule, // <-- Füge das hier hinzu
-    IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, HttpClientModule, IonItem, IonLabel, IonList, IonThumbnail
+    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton
   ],
   providers: [LOZApiService]
 })
