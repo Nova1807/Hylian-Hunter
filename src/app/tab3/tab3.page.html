@@ -1,17 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="homepage-content">
+  <!-- Background Elements -->
+  <div class="background-blur"></div>
+  <div class="background-gradient"></div>
+<div class="cards">
+  <!-- Zelda Game Card -->
+  <div class="game-card zelda-card">
+    <h2 class="game-title">The Legend of Zelda: Breath of the Wild</h2>
+    <img src="assets/Zelda_bilder/link_1.png" class="zelda-image" alt="Zelda">
+    <div class="game-description">
+      <p>No kingdom. No memories. After a 100-year slumber, Link wakes up alone in a world he no longer remembers.
+      Now the legendary hero must explore a vast and dangerous land and regain his memories before Hyrule is lost forever.
+      Armed only with what he can scavenge, Link sets out to find answers and the resources needed to survive.</p>
+    </div>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <!-- Monster Hunter Game Card -->
+  <div class="game-card mh-card">
+    <h2 class="game-title">Monster Hunter World</h2>
+    <img src="assets/Monster-Images/Rathian.png" class="mh-image" alt="Monster Hunter">
+    <div class="game-description">
+      <p>As a hunter, you'll take on quests to hunt monsters in a variety of habitats.
+      Take down these monsters and receive materials that you can use to create stronger weapons and armor in order to hunt even more dangerous monsters.</p>
+    </div>
+  </div>
+</div>
 </ion-content>

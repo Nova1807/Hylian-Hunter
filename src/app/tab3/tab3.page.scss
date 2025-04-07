@@ -1,0 +1,108 @@
+/* Main Styles */
+.homepage-content {
+  --background: none;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  color: #fff; /* Textfarbe auf weiß gesetzt */
+}
+
+.background-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0.06deg, #201515 13.3%, #e57a4c);
+  z-index: -1;
+}
+
+.background-blur {
+  position: fixed;
+  top: -147px;
+  left: -97.5px;
+  width: 301px;
+  height: 301px;
+  background: rgba(123, 130, 148, 0.3);
+  filter: blur(226.88px);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Game Cards - mit korrigierten Abständen */
+.game-card {
+  position: relative;
+  width: 335px;
+  height: 256px;
+  border-radius: 18px;
+  margin: 0 auto;
+  box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.cards{
+  position: relative;
+  top: 7%;
+
+  object-fit: contain;
+}
+.zelda-card {
+
+  background: linear-gradient(104.11deg, #e57a4c 26.36%, #f4d384);
+  margin: 103px auto 80px;
+  padding: 19px 22px;
+}
+
+.mh-card {
+  background: linear-gradient(104.11deg, #736461, #28201e 84.26%);
+  margin: 40px auto; /* Gleichmäßiger Abstand */
+  padding: 17px;
+}
+
+/* Textformatierung korrigiert */
+.game-title {
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.11px;
+  margin: 0 0 15px 0;
+  width: 70%;
+  z-index: 2;
+  color: #fff; /* Sicherstellen dass Titel weiß ist */
+}
+
+.game-description {
+  position: relative;
+  font-size: 11.65px; /* Exakte Figma-Größe */
+  letter-spacing: 1.11px;
+  line-height: 1.4; /* Gleichmäßiger Zeilenabstand */
+  width: 60%;
+  z-index: 2;
+  color: #fff; /* Textfarbe weiß */
+
+  p {
+    margin: 0 0 10px 0; /* Konsistente Absatzabstände */
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Bildpositionierung korrigiert */
+.zelda-image {
+  position: absolute;
+  top: 0;
+  right: -20px; /* Weiter nach rechts verschoben */
+  height: 100%;
+  width: auto;
+  max-width: none;
+  border-radius: 0 7px 7px 0;
+}
+
+.mh-image {
+  position: absolute;
+  top: 5px;
+  right: -80px;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  border-radius: 0 6px 6px 0;
+}
