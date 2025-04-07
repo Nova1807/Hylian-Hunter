@@ -1,58 +1,87 @@
-/* Center the title in the header */
+/* Header title centering */
 ion-header {
   ion-toolbar {
     display: flex;
-    justify-content: center; /* Center the title horizontally */
+    justify-content: center;
+
     ion-title {
       text-align: center;
-      width: 100%; /* Ensure the title takes the full width of the toolbar */
+      width: 100%;
     }
   }
 }
 
-/* Global content padding */
 ion-content {
   padding: 20px;
-  background-color: #f1f1f1; /* Background for the entire content area */
+  background-color: #f1f1f1;
 }
 
-/* Container and styling for buttons */
-.button-container {
-  width: 100%;
+/* Main rectangle box */
+.rectangle {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%);
+  //border-radius: 20px;
+  //box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
+/* Button container */
+
+
+/* Buttons */
 .button {
-  width: 48%;
-  padding: 15px;
-  text-align: center;
-  background: linear-gradient(129deg, #E57A4C 0%, #F4D384 100%) !important; /* Custom gradient */
-  color: white !important; /* White text */
+  width: 110%;
+  height: 10px;
+  //padding: 0px;
+  margin-bottom: 10px;
+  color: white;
   font-weight: bold;
-  border-radius: 18px;
+  background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%);
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  border: none !important; /* Remove the default button border */
-  transition: background 0.3s ease-in-out;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: adds shadow to the button */
+ // transition: background 0.3s ease-in-out;
+  box-shadow: none;
+  //text-align: center;
 }
 
 .button:hover {
-  background: linear-gradient(129deg, #F4D384 0%, #E57A4C 100%) !important; /* Reverse the gradient on hover */
+  background: linear-gradient(129deg, #f4d384 0%, #e57a4c 100%);
 }
 
-/* Ensure the background of the entire list is applied */
+/* Image section */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-bottom:100px;
+}
+
+.link1 {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  opacity: 0.7;
+}
+
+/* Monster list styling */
 .monster-list-container {
-  background: none; /* Remove any background from the container */
+  background: none;
   padding: 20px;
   border-radius: 18px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
-/* Styling for each API item */
 .monster-item {
-  background: linear-gradient(129deg, #E57A4C 0%, #F4D384 100%) !important; /* Apply the background color here */
+  background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%) !important;
   padding: 15px;
   margin-bottom: 10px;
   color: white;
@@ -60,23 +89,12 @@ ion-content {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling for the image */
-img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-/* Title for each monster */
 h2 {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
-/* Description styling */
 p {
   font-size: 14px;
   color: white;
