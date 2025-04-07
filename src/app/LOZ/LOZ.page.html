@@ -1,21 +1,61 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Hylian Hunter</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="iphone-13-mini-11">
+  <!-- Welcome Banner -->
+  <div class="welcome-to-the-container">
+    <p class="welcome-to">Welcome to</p>
+    <p class="welcome-to">The Legend of Zelda:</p>
+    <p class="welcome-to">Breath of the Wild Compendium</p>
+  </div>
 
-<ion-content>
-    <div class="rectangle">
-    <div class="button-container">
-    <div class="button">
-      <ion-button class="button"  color="transparent">Go to Weapons</ion-button>
-      <ion-button class="button"  color="transparent">Go to Monsters</ion-button>
-     </div>
+  <!-- Search Bar -->
+  <div class="search-container">
+    <div class="iphone-13-mini-11-inner">
+      <img class="search-icon" src="assets/Zelda_bilder/Search.png">
+      <div class="search">Search</div>
     </div>
-      <img class="link1" src="assets/Zelda_bilder/link_1.png" alt="Link Image" />
+    <div class="rectangle-div">
+      <img class="icon" src="assets/Zelda_bilder/filter.png">
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="frame-parent">
+    <div class="go-to-weapons-wrapper">
+      <div class="go-to-weapons">Go to Weapons</div>
+    </div>
+    <div class="go-to-monsters-wrapper">
+      <div class="go-to-weapons">Go to Monsters</div>
+    </div>
+    <div class="frame-child"></div>
+    <img class="link-1-icon" src="assets/Zelda_bilder/link_1.png">
+  </div>
+
+  <!-- Popular Weapons Title -->
+  <div class="popular-weapons">Popular Weapons</div>
+
+  <!-- Weapons Grid -->
+  <div class="weapons-grid">
+    <div class="ellipse-container">
+      <div class="ellipse-div"></div>
+      <img class="image-279-icon" src="assets/Zelda_bilder/master_sword.png">
+      <div class="the-master-sword">The Master Sword</div>
+      <div class="rectangle-parent">
+        <div class="group-child"></div>
+        <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png">
+      </div>
     </div>
 
-  <!-- Monster list -->
+    <div class="group-parent">
+      <img class="image-280-icon" src="assets/Zelda_bilder/ancient_sword.png">
+      <div class="ancient-sword">Ancient Sword</div>
+      <div class="frame-child1"></div>
+      <div class="rectangle-group">
+        <div class="group-item"></div>
+        <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png">
+      </div>
+    </div>
+  </div>
+
+  <!-- Monster List -->
   <div class="monster-list-container">
     <ion-list>
       <ion-card *ngFor="let monster of monsters" class="monster-item">
