@@ -6,7 +6,7 @@ import {
   IonContent,
   IonItem,
   IonList,
-  IonLabel
+  IonLabel, IonTabBar, IonTabButton
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
@@ -17,7 +17,7 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
   selector: 'app-Monster-Hunter',
   templateUrl: 'Monster-Hunter.page.html',
   styleUrls: ['Monster-Hunter.page.scss'],
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonItem, IonList, HttpClientModule, IonLabel],
+  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonItem, IonList, HttpClientModule, IonLabel, IonTabBar, IonTabButton],
 })
 export class MonsterHunterPage implements OnInit {
   monsters: any[] = [];

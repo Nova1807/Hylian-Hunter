@@ -1,62 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Monster Liste</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let monster of monsters">
-      <ion-label>
-        <h2>{{ monster.name }}</h2>
-        <img [src]="'../assets/Monster-Images/' + monster.name + '.png'" class="monster-image" />
-        <p><strong>Beschreibung:</strong> {{ monster.description }}</p>
-        <p><strong>Spezies:</strong> {{ monster.species }}</p>
-        <p *ngIf="monster.elements?.length > 0">
-          <strong>Elemente:</strong> {{ monster.elements?.join(', ') }}
-        </p>
-        <p *ngIf="monster.weaknesses?.length > 0">
-          <strong>Schwächen:</strong>
-          <span *ngFor="let weakness of monster.weaknesses; let i = index">
-            {{ weakness.element }}<span *ngIf="i < monster.weaknesses.length - 1">, </span>
-          </span>
-        </p>
-        <ul>
-          <li *ngFor="let weakness of monster.weaknesses">
-            {{ weakness.element }} - Effektivität: {{ weakness.stars }}
-          </li>
-        </ul>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item>
-      <ion-label>
-        <h2>Weapons Liste</h2>
-      </ion-label>
-    </ion-item>
-    <ion-item *ngFor="let weapon of weapons">
-      <ion-label>
-        <h3>{{ weapon.displayName }}</h3>
-        <img [src]="'../assets/' + getWeaponImagePath(weapon)" />
-        <p><strong>Type:</strong> {{ weapon.type }}</p>
-        <p><strong>Attack:</strong> {{ weapon.attack.display || weapon.attack.raw }}</p>
-        <p *ngIf="weapon.elements && weapon.elements.length > 0">
-          <strong>Elements:</strong>
-          <span *ngFor="let element of weapon.elements; let i = index">
-            {{ element.type }}<span *ngIf="i < weapon.elements.length - 1">, </span>
-          </span>
-        </p>
-        <!-- Crafting Informationen hinzufügen -->
-        <div *ngIf="weapon.crafting && weapon.crafting.craftingMaterials?.length > 0">
-          <p><strong>Crafting Materialien:</strong></p>
-          <ul>
-            <li *ngFor="let material of weapon.crafting.craftingMaterials">
-              {{ material.quantity }}x {{ material.item.name }}
-            </li>
-          </ul>
-        </div>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+<ion-content class="monster-content">
+  <!-- Header -->
+  <div class="header">
+    <div class="title">Monster Hunter World</div>
+
+    <!-- Temporäre Suchleiste (ohne Funktion) -->
+    <div class="search-container">
+      <div class="search-bar">
+        <img src="assets/Search.svg" class="search-icon">
+        <input type="text" placeholder="Search" class="search-input" disabled>
+      </div>
+      <div class="filter-button">
+        <img src="assets/6488674 4.png" class="filter-icon">
+      </div>
+    </div>
+  </div>
+
+  <!-- Hauptmonster (erstes Monster in der Liste) -->
+  <div *ngIf="monsters.length > 0" class="main-monster-card">
+    <div class="monster-name">{{ monsters[0].name }}</div>
+    <img class="monster-badge" [src]="'assets/Monster-Images/' + monsters[0].name + 'mini.png'">
+    <img class="monster-image" [src]="'assets/Monster-Images/' + monsters[0].name + '.png'">
+
+    <div class="monster-details">
+      <p><strong>Spezies:</strong> {{ monsters[0].species }}</p>
+      <p *ngIf="monsters[0].elements?.length > 0">
+        <strong>Elemente:</strong> {{ monsters[0].elements.join(', ') }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Alle anderen Monster -->
+  <div class="section-title">Alle Monster</div>
+
+  <div class="similar-monsters-grid">
+    <div class="monster-tile" *ngFor="let monster of monsters.slice(1)">
+      <img class="monster-tile-image" [src]="'assets/Monster-Images/' + monster.name + '.png'">
+      <div class="monster-tile-name">{{ monster.name }}</div>
+      <div class="monster-tile-species">{{ monster.species }}</div>
+    </div>
+  </div>
 
 </ion-content>
