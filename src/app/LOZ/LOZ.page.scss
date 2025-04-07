@@ -14,22 +14,22 @@
   position: relative;
   text-align: center;
   padding-top: 15px;
+}
 
-  .welcome-to {
-    margin: 0;
-    font-family: 'Archivo Black';
-    font-size: 19px;
-    letter-spacing: 0.05em;
-    line-height: 1.3;
-  }
+.welcome-to {
+  margin: 0;
+  font-family: 'Archivo Black';
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
 }
 
 /* Search Bar */
 .search-container {
   display: flex;
   justify-content: space-between;
-  width:100%;
-  margin-left:10px;
+  width: 100%;
+  margin-left: 10px;
   padding: 10px 20px;
   margin-top: 20px;
 }
@@ -67,7 +67,7 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
-  margin-right:20px;
+  margin-right: 20px;
   align-items: center;
 }
 
@@ -88,7 +88,8 @@
   overflow: hidden;
 }
 
-.go-to-weapons-wrapper, .go-to-monsters-wrapper {
+.go-to-weapons-wrapper,
+.go-to-monsters-wrapper {
   position: absolute;
   width: 143px;
   height: 53px;
@@ -102,14 +103,14 @@
 .go-to-weapons-wrapper {
   top: 26px;
   left: 25px;
-  background: linear-gradient(101.18deg, #e57a4c 11%, #f6c360 31.5%, #e98c51 92%);
+  background: linear-gradient(101.18deg, #e57a4c 10%, #f6c360 35%, #e98c51 50%);
   border: 1px solid rgba(255, 197, 103, 0.5);
 }
 
 .go-to-monsters-wrapper {
   top: 112px;
   left: 25px;
-  background: linear-gradient(101.18deg, #f6c360, #e57a4c 22.5%);
+  background: linear-gradient(101.18deg, #f6c360 20%, #e57a4c 30%);
   border: 1px solid rgba(229, 122, 76, 0.5);
 }
 
@@ -156,7 +157,8 @@
   padding: 0 20px;
 }
 
-.ellipse-container, .group-parent {
+.ellipse-container,
+.group-parent {
   position: relative;
   height: 201px;
   background: linear-gradient(180deg, #f6c360, #ffc567);
@@ -164,7 +166,8 @@
   overflow: hidden;
 }
 
-.ellipse-div, .frame-child1 {
+.ellipse-div,
+.frame-child1 {
   position: absolute;
   width: 109px;
   height: 100px;
@@ -184,7 +187,8 @@
   left: 29px;
 }
 
-.image-279-icon, .image-280-icon {
+.image-279-icon,
+.image-280-icon {
   position: absolute;
   width: 96px;
   height: 95px;
@@ -201,10 +205,11 @@
   left: 32px;
 }
 
-.the-master-sword, .ancient-sword {
+.the-master-sword,
+.ancient-sword {
   position: absolute;
   font-family: 'Inter';
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: 0.05em;
 }
 
@@ -218,12 +223,13 @@
   left: 25px;
 }
 
-.rectangle-parent, .rectangle-group {
+.rectangle-parent,
+.rectangle-group {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  bottom: 15px;
-  right: 15px;
+  width: 40px;
+  height: 27px;
+  bottom: 13px;
+  right: 18px;
   background: linear-gradient(180deg, #e57a4c, #ffc567);
   border-radius: 5px;
   box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.25);
@@ -237,17 +243,23 @@
   height: 20px;
 }
 
-/* Monster List (kept your original functionality) */
+/* Monster List */
 .monster-list-container {
   margin: 20px;
 }
 
-.monster-item {
+ion-list.ios.list-ios {
+  background: transparent;
+}
+
+ion-card.monster-item {
+  --ion-background-color: transparent;
   background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%) !important;
   border-radius: 18px;
   margin-bottom: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: none !important;
 }
 
 .monster-content img {
@@ -285,13 +297,15 @@
   gap: 20px;
 }
 
-.group-div, .ellipse-parent1 {
+.group-div,
+.ellipse-parent1 {
   position: relative;
   width: 38px;
   height: 44px;
 }
 
-.group-child1, .group-child2 {
+.group-child1,
+.group-child2 {
   position: absolute;
   width: 35px;
   height: 35px;
