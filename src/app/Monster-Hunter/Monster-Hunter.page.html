@@ -6,12 +6,32 @@
     <!-- Temporäre Suchleiste (ohne Funktion) -->
     <div class="search-container">
       <div class="search-bar">
-        <img src="assets/Search.svg" class="search-icon">
-        <input type="text" placeholder="Search" class="search-input" disabled>
-      </div>
-      <div class="filter-button">
-        <img src="assets/6488674 4.png" class="filter-icon">
-      </div>
+        <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>      </div>
+      <ion-button class="filter-button" id="popover-button">
+        <img src="assets/Monster_Hunter_Pages/filter.png" class="filter-icon" alt="Filter">
+      </ion-button>
+
+      <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item [button]="true" [detail]="false">Option 1</ion-item>
+              <ion-item [button]="true" [detail]="false">Option 2</ion-item>
+              <ion-item [button]="true" id="nested-trigger">More options...</ion-item>
+
+              <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">
+                <ng-template>
+                  <ion-content>
+                    <ion-list>
+                      <ion-item [button]="true" [detail]="false">Nested option</ion-item>
+                    </ion-list>
+                  </ion-content>
+                </ng-template>
+              </ion-popover>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
     </div>
   </div>
 
