@@ -98,6 +98,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer; /* Makes it look like a clickable button */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
 .go-to-weapons-wrapper {
@@ -140,6 +142,13 @@
   height: 186px;
   object-fit: cover;
   opacity: 0.8;
+}
+
+/* Hover Effect */
+.go-to-weapons-wrapper:hover,
+.go-to-monsters-wrapper:hover {
+  transform: scale(1.1); /* Slightly enlarge the button */
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3); /* Add a stronger shadow */
 }
 
 /* Weapons Section */
