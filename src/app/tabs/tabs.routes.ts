@@ -30,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/Monster-Hunter',
+    redirectTo: '/tabs/tab3',
     pathMatch: 'full',
   },
 ];
