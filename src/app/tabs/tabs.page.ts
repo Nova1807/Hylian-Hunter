@@ -1,7 +1,5 @@
-import { Component, EnvironmentInjector, inject } from '@angular/core';
+import { Component, EnvironmentInjector, inject, ViewChild } from '@angular/core';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { triangle, ellipse, square } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tabs',
@@ -10,9 +8,21 @@ import { triangle, ellipse, square } from 'ionicons/icons';
   imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
 })
 export class TabsPage {
+  @ViewChild('tabs') tabsRef?: IonTabs;
+  public activeTab: string = 'tab3'; // Standard-Tab
   public environmentInjector = inject(EnvironmentInjector);
 
-  constructor() {
-    addIcons({ triangle, ellipse, square });
+  constructor() {}
+
+  tabChanged(event: { tab: string }) {
+    this.activeTab = event.tab;
+  }
+
+  getButtonImage(buttonType: 'Home' | 'M' | 'Z'): string {
+    // Der aktive Tab bestimmt den Ordner
+    const folder = this.activeTab === 'tab3' ? 'Home' :
+      this.activeTab === 'Monster-Hunter' ? 'Monster_Hunter' : 'LOZ';
+
+    return `assets/Footer_Images/${folder}/${buttonType}.png`;
   }
 }

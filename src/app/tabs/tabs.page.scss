@@ -1,1 +1,39 @@
+// Base tab bar styles
+ion-tab-bar {
+  --background: #607D8B; // Default color
+  --color: white;
+  --color-selected: white;
 
+  transition: background-color 0.3s ease;
+
+  // Make the tab bar bigger
+  height: 80px; // Adjust height as needed
+
+  // Tab-specific colors
+  &.tab-bar-tab3 {
+    --background: #5C4945;
+  }
+
+  &.tab-bar-Monster-Hunter {
+    --background: #201515; // Red
+  }
+
+  &.tab-bar-LOZ {
+    --background: linear-gradient(#e57a4c, #f6c360 , #e57a4c);
+  }
+}
+
+// Active tab indicator
+ion-tab-button.tab-selected {
+  ion-icon, ion-label {
+    color: var(--ion-color-light) !important;
+  }
+  &::after {
+    background-color: var(--ion-color-light);
+    content: "";
+    display: block;
+    height: 2px;
+    margin: 0 auto;
+    width: 20px;
+  }
+}
