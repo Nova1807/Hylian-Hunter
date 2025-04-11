@@ -38,23 +38,32 @@
   box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
-.cards{
+
+.cards {
   position: relative;
   top: 7%;
-
   object-fit: contain;
 }
-.zelda-card {
 
+.zelda-card {
   background: linear-gradient(104.11deg, #e57a4c 26.36%, #f4d384);
   margin: 103px auto 80px;
   padding: 19px 22px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .mh-card {
   background: linear-gradient(104.11deg, #736461, #28201e 84.26%);
-  margin: 40px auto; /* Gleichmäßiger Abstand */
+  margin: 40px auto;
   padding: 17px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover-Effekte für Zelda und Monster Hunter Cards */
+.zelda-card:hover,
+.mh-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 40px 60px rgba(0, 0, 0, 0.3);
 }
 
 /* Textformatierung korrigiert */
@@ -66,31 +75,33 @@
   margin: 0 0 15px 0;
   width: 70%;
   z-index: 2;
-  color: #fff; /* Sicherstellen dass Titel weiß ist */
+  color: #fff;
 }
 
 .game-description {
+  margin-top: -10px;
   position: relative;
-  font-size: 11.65px; /* Exakte Figma-Größe */
+  font-size: 11.65px;
   letter-spacing: 1.11px;
-  line-height: 1.4; /* Gleichmäßiger Zeilenabstand */
+  line-height: 1.4;
   width: 60%;
   z-index: 2;
-  color: #fff; /* Textfarbe weiß */
+  color: #fff;
+}
 
-  p {
-    margin: 0 0 10px 0; /* Konsistente Absatzabstände */
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+.game-description p {
+  margin: 0 0 10px 0;
+}
+
+.game-description p:last-child {
+  margin-bottom: 0;
 }
 
 /* Bildpositionierung korrigiert */
 .zelda-image {
   position: absolute;
   top: 0;
-  right: -20px; /* Weiter nach rechts verschoben */
+  right: -20px;
   height: 100%;
   width: auto;
   max-width: none;
