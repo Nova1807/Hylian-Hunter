@@ -18,3 +18,6 @@ export class WeaponPageLozPage implements OnInit {
   }
 
 }
+
+export class WeaponPageLoz {
+}

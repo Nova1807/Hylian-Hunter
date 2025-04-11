@@ -8,7 +8,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonThumbnail, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton
+  IonThumbnail, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, IonSearchbar
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +22,7 @@ import {RouterLink} from "@angular/router";
   standalone: true,
   imports: [
     CommonModule, // <-- Füge das hier hinzu
-    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink
+    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink, IonSearchbar
   ],
   providers: [LOZApiService]
 })

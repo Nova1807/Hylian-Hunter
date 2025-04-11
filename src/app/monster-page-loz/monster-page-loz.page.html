@@ -1,13 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>monster-page-loz</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="iphone-13-mini-11">
+  <!-- Welcome Banner -->
+  <div class="welcome-to-the-container">
+    <p class="welcome-to">Welcome to</p>
+    <p class="welcome-to">The Legend of Zelda:</p>
+    <p class="welcome-to">Breath of the Wild Compendium</p>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">monster-page-loz</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Monster List -->
+  <div class="monster-list-container">
+    <div class="monster-grid">
+      <ion-card *ngFor="let monster of monsters" class="monster-item">
+        <ion-card-header>
+          <ion-card-title><strong>{{ monster.name | uppercase }}</strong></ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="monster-content">
+          <img [src]="monster.image" alt="{{ monster.name }}" />
+          <p><strong>Description:</strong> {{ monster.description }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

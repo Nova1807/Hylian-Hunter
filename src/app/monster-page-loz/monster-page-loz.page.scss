@@ -1,0 +1,57 @@
+/* Monster List */
+.monster-list-container {
+  margin: 20px;
+  padding-bottom: 80px; /* Add padding to prevent bottom navigation overlap */
+}
+
+.monster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+  gap: 15px; /* Space between cards */
+}
+
+.monster-item {
+  background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%) !important;
+  border-radius: 18px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: none !important;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Monster Content */
+.monster-content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: 100%;
+}
+
+.monster-content img {
+  width: 100%;
+  height: auto;
+  max-height: 150px; /* Limit image height */
+  object-fit: contain; /* Keep aspect ratio */
+  border-radius: 8px;
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+/* Make text content scrollable if needed */
+.monster-content p {
+  margin: 5px 0;
+  overflow: auto;
+  max-height: 80px; /* Limit description height */
+}
+
+/* For very small screens, adjust gap and margins */
+@media (max-width: 400px) {
+  .monster-grid {
+    gap: 10px;
+  }
+  .monster-list-container {
+    margin: 10px;
+  }
+}

@@ -1,6 +1,6 @@
 /* Main Container */
 .iphone-13-mini-11 {
-  --ion-background-color: #e57a4c;
+  --ion-background-color:linear-gradient(180deg, #ec8e53, #f8b05f 50.5%, #e57a4c);
   position: relative;
   color: #e57a4c;
   height: 100%;
@@ -27,9 +27,9 @@
 /* Search Bar */
 .search-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
-  margin-left: 10px;
+  margin-left: -10px;
   padding: 10px 20px;
   margin-top: 20px;
 }
@@ -44,13 +44,6 @@
   display: flex;
   align-items: center;
   padding-left: 15px;
-}
-
-.search-icon {
-  width: 20px;
-  height: 20px;
-  opacity: 0.1;
-  margin-right: 10px;
 }
 
 .search {
@@ -98,8 +91,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer; /* Makes it look like a clickable button */
-  transition: all 0.3s ease; /* Smooth transition for hover effect */
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .go-to-weapons-wrapper {
@@ -147,8 +140,8 @@
 /* Hover Effect */
 .go-to-weapons-wrapper:hover,
 .go-to-monsters-wrapper:hover {
-  transform: scale(1.1); /* Slightly enlarge the button */
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3); /* Add a stronger shadow */
+  transform: scale(1.1);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Weapons Section */
@@ -344,4 +337,30 @@ ion-card.monster-item {
   position: absolute;
   width: 46px;
   height: 37px;
+}
+
+/* ion-searchbar Styling */
+ion-searchbar {
+  --background: linear-gradient(90deg, #ffc567 24%, #e57a4c 82.5%);
+  --color: #000;
+  --placeholder-color: rgba(0, 0, 0, 0.5);
+  --icon-color: rgba(0, 0, 0, 0.5);
+  --clear-button-color: #000;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  font-family: 'Archivo Black';
+  font-size: 13px;
+}
+
+ion-searchbar::part(input) {
+  border-radius: 12px;
+  padding-left: 40px;
+}
+
+ion-searchbar::part(icon) {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
 }

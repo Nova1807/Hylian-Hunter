@@ -8,14 +8,21 @@
 
   <!-- Search Bar -->
   <div class="search-container">
-    <div class="iphone-13-mini-11-inner">
-      <img class="search-icon" src="assets/Zelda_bilder/Search.png">
-      <div class="search">Search</div>
+    <div class="custom-searchbar-wrapper">
+      <ion-searchbar
+        animated="true"
+        placeholder="Search"
+        show-clear-button="always"
+        mode="ios">
+        <div class="rectangle-div">
+        <img class="icon" src="../../assets/Monster_Hunter_Pages/filter.png">
+      </div>
+      </ion-searchbar>
     </div>
-    <div class="rectangle-div">
-      <img class="icon" src="../../assets/Monster_Hunter_Pages/filter.png">
     </div>
-  </div>
+
+
+
 
   <!-- Hero Section -->
   <!-- Go to Weapons -->
@@ -61,22 +68,5 @@
         <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png">
       </div>
     </div>
-  </div>
-
-  <!-- Monster List -->
-  <div class="monster-list-container">
-    <ion-list>
-      <ion-card *ngFor="let monster of monsters" class="monster-item">
-        <ion-card-header>
-          <ion-card-title><strong>{{ monster.name | uppercase}}</strong></ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="monster-content">
-            <img [src]="monster.image" alt="{{ monster.name }}" />
-            <p><strong>Description:</strong> {{ monster.description }}</p>
-          </div>
-        </ion-card-content>
-      </ion-card>
-    </ion-list>
   </div>
 </ion-content>
