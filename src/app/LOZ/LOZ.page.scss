@@ -31,7 +31,7 @@
   width: 100%;
   margin-left: -10px;
   padding: 10px 20px;
-  margin-top: -18px;
+  margin-top: -12px;
 }
 
 .iphone-13-mini-11-inner {
@@ -390,7 +390,7 @@ ion-searchbar::part(icon) {
 }
 
 .welcome-to {
-  animation: revealLeftToRight 1s ease-out forwards;
+  animation: revealLeftToRight 1.3s ease-out forwards;
   animation-delay: 0.4s;
   display: inline-block;
   clip-path: inset(0 100% 0 0);
