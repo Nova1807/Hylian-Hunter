@@ -23,6 +23,7 @@ ion-content {
 }
 
 .search-bar {
+  background: var(#68514c);
   flex: 1;
   background: #68514c;
   border-radius: 12px;
@@ -183,3 +184,27 @@ ion-content {
     margin: 0 auto;
   }
 }
+/* Add to your SCSS file */
+.monster-tile-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.skeleton-loading {
+  ion-skeleton-text {
+    background: rgba(var(--ion-color-medium-rgb), 0.2);
+  }
+}
+
+.monster-tile.skeleton-item {
+  background: rgba(var(--ion-color-light-rgb), 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+/* Add to your component's SCSS */
+ion-searchbar {
+  isolation: isolate;
+  background: #68514c;
+  --color: inherit !important;
+}
+

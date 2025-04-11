@@ -1,0 +1,196 @@
+ion-content.main-content {
+  --background: #28201e;
+  font-family: 'Otomanopee One', sans-serif;
+  color: #eee;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    right: -35%;
+    width: 110%;
+    height: 50%;
+    filter: blur(311px);
+    border-radius: 50%;
+    background: rgba(189, 162, 157, 0.4);
+    z-index: -1;
+  }
+
+  // Improved text contrast
+  .description, .detail-item, .weakness-item {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// Updated back button with image
+.back-button {
+  --color: #eee;
+  --background: linear-gradient(180deg, #201515, rgba(32, 21, 21, 0));
+  --border-radius: 7.64px;
+  width: 48px;  // Larger touch target
+  height: 48px;
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
+  margin-left: 16px;
+  margin-top: 10px; // Additional positioning
+
+  // Custom arrow image styling
+  ion-icon {
+    display: none; // Hide default icon
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+  }
+}
+
+.content-wrapper {
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.main-image {
+  width: calc(100% - 38px);
+  height: 234px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin: 100px 19px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.monster-name {
+  font-size: 28px;
+  letter-spacing: 0.05em;
+  margin: 30px 19px 20px;
+  color: #eee;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); // Better contrast
+}
+
+.info-section {
+  background: #201515;
+  border-radius: 18px;
+  padding: 24px 16px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  border: 1px solid #382828; // Added border for depth
+}
+
+.description-container {
+  margin-bottom: 24px;
+
+  .description {
+    font-size: 14px;
+    line-height: 1.6; // Improved readability
+    margin-bottom: 16px;
+  }
+}
+
+.detail-item {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #ffecd1; // Warm text color
+}
+
+.weakness-section {
+  margin-top: 24px;
+
+  .subsection-title {
+    font-size: 17px;
+    margin-bottom: 12px;
+    color: #ffd8a8; // Brighter title
+  }
+}
+
+.weakness-list {
+  list-style: none;
+  padding-left: 19px;
+  margin: 0;
+
+  .weakness-item {
+    font-size: 14px;
+    margin-bottom: 8px; // Increased spacing
+    position: relative;
+    padding-left: 8px;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: -14px;
+      color: #ffd8a8; // Matching title color
+      font-size: 18px;
+    }
+  }
+}
+
+.weapons-title {
+  font-size: 17px;
+  color: #ffd8a8; // Consistent accent color
+  margin: 32px 0 16px 19px;
+}
+/* 1. FIRST ADD THIS NEW WRAPPER (won't affect your image) */
+.back-button-wrapper {
+  position: absolute;
+  top: 20px; // Match your existing margin (24px -> 20px)
+  left: 16px; // Match your existing margin
+  z-index: 100;
+
+  ion-buttons {
+    display: block;
+    width: auto;
+  }
+}
+
+.back-button-wrapper {
+  position: fixed;
+  top: 60px; /* MOVED DOWN (was 20px) */
+  left: 16px;
+  z-index: 100;
+  will-change: transform;
+
+  ion-buttons {
+    display: block;
+    width: auto;
+  }
+}
+
+.custom-back-button {
+  /* INCREASED SIZE (was 48px) */
+  width: 64px;
+  height: 64px;
+
+  /* SCALE UP BACKGROUND IMAGE */
+  background: url('/assets/Subpage-Monster-Hunter/Arrow.png') center/32px 32px no-repeat; /* was 24px */
+
+  /* Keep all your existing styles below */
+  --border-radius: 10px;
+  margin: 0;
+
+  &::part(text), &::part(icon) {
+    display: none !important;
+  }
+
+  &::part(native) {
+    /* MATCH THE LARGER SIZE */
+    background: url('/assets/Subpage-Monster-Hunter/Arrow.png') center/32px 32px no-repeat;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Update these to match new size */
+  --width: 64px !important;
+  --height: 64px !important;
+  min-width: 64px !important;
+
+  /* Keep existing padding resets */
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
