@@ -46,7 +46,7 @@ export class MonsterHunterPage implements OnInit {
   navigateToDetail(monsterId: number) {
     this.router.navigate(['/subpage-monster-hunter'], {
       queryParams: { id: monsterId },
-      queryParamsHandling: 'merge' // Preserves other query params if needed
+      queryParamsHandling: 'merge'
     });
   }
 
@@ -90,7 +90,6 @@ export class MonsterHunterPage implements OnInit {
     }, 800);
   }
 
-  // Image loading handlers
   onImageLoad(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.opacity = '1';
@@ -103,7 +102,6 @@ export class MonsterHunterPage implements OnInit {
     imgElement.style.opacity = '1';
   }
 
-  // Keep your existing weapons methods
   loadWeapons() {
     this.monsterApiService.getAllWeapons().subscribe(
       (data) => {

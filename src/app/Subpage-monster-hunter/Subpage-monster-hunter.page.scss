@@ -98,14 +98,14 @@ ion-content.main-content {
   color: #ffecd1; // Warm text color
 }
 
+.subsection-title {
+  font-size: 17px;
+  color: #ffd8a8 !important; // Added !important to ensure it overrides
+  margin-bottom: 12px;
+}
+
 .weakness-section {
   margin-top: 24px;
-
-  .subsection-title {
-    font-size: 17px;
-    margin-bottom: 12px;
-    color: #ffd8a8; // Brighter title
-  }
 }
 
 .weakness-list {
@@ -134,6 +134,7 @@ ion-content.main-content {
   color: #ffd8a8; // Consistent accent color
   margin: 32px 0 16px 19px;
 }
+
 /* 1. FIRST ADD THIS NEW WRAPPER (won't affect your image) */
 .back-button-wrapper {
   position: absolute;
@@ -193,4 +194,174 @@ ion-content.main-content {
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
+}
+
+/* Add these styles to your existing SCSS */
+.weapons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+
+.weapon-card {
+  position: relative;
+  box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #736461, #28201e);
+  height: 222px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.weapon-bg-glow {
+  position: absolute;
+  top: -37px;
+  left: -49px;
+  filter: blur(94.22px);
+  border-radius: 50%;
+  background-color: rgba(226, 196, 190, 0.73);
+  width: 125px;
+  height: 125px;
+}
+
+.weapon-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 160px;
+  height: auto;
+  max-height: 140px;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.main-image {
+  width: 100%; // Take full width of container
+  max-width: 450px; // Set maximum size (adjust as needed)
+  height: auto; // Let height adjust automatically
+  max-height: 400px; // Set maximum height
+  object-fit: contain;
+  border-radius: 18px;
+  margin: 60px auto 20px; // Reduced top margin to accommodate larger image
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.star-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  color: gold;
+  font-size: 24px;
+  z-index: 3;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+}
+
+.weapon-name {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  letter-spacing: 0.05em;
+  font-size: 16px;
+  color: #eee !important;
+  font-family: 'Otomanopee One', sans-serif;
+  padding: 0 8px;
+  z-index: 3;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  margin: 0;
+}
+
+/* Additional style for weapon view */
+.weapon-view {
+  .subsection-title {
+    color: #ffd8a8 !important; // Ensure it's visible in weapon view too
+  }
+}
+/* Add this new section to your existing SCSS */
+.drops-section {
+  margin-top: 24px;
+
+  .drop-categories {
+    background: rgba(40, 32, 30, 0.8);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 8px;
+  }
+
+  .drop-category {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .drop-type {
+    color: #ffd8a8; /* Gold-like color to match your theme */
+    font-size: 15px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #4a3a38;
+    padding-bottom: 4px;
+  }
+
+  .drop-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .drop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #4a3a38;
+    color: white; /* Ensures text is white */
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .drop-name {
+    flex-grow: 1;
+    color: white; /* Explicit white color */
+    margin-right: 16px; /* Adds space between name and percentage */
+  }
+
+  .drop-condition {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 8px;
+    font-style: italic;
+  }
+
+  .drop-chance {
+    background: #4a3a38;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+    margin-left: 8px; /* Adds space between condition and percentage */
+  }
+}
+
+.no-drops {
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  text-align: center;
+  padding: 12px;
+  background: rgba(40, 32, 30, 0.5);
+  border-radius: 8px;
+  margin-top: 8px;
 }
