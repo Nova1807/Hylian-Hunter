@@ -14,12 +14,23 @@ export class MonsterHunterApiService {
     return this.http.get<any[]>(`${this.baseUrl}/monsters`);
   }
 
-
   getMonsterById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/monsters/${id}`);
   }
+// In MonsterHunterApiService
   getAllWeapons(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/weapons`);
+    // Add ?include=crafting to get weapon crafting data
+    return this.http.get<any[]>(`${this.baseUrl}/weapons?include=crafting`);
   }
-
+  // MonsterHunterApiService
+  getWeaponById(id: number): Observable<any> {
+    return this.http.get<any>(
+      `https://api.mhw-db.com/weapons/${id}?include=assets,crafting`
+    );
+  }
+  getWeaponsByIds(ids: number[]): Observable<any[]> {
+    return this.http.get<any[]>(
+      `https://api.mhw-db.com/weapons?q={"id_in": [${ids.join(',')}]}`
+    );
+  }
 }

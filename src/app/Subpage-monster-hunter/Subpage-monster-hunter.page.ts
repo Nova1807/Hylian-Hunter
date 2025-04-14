@@ -9,6 +9,17 @@ import { ActivatedRoute } from '@angular/router';
 import { MonsterHunterApiService } from "../Monster-Hunter.api/Monster-Hunter.api.service";
 import { Location } from '@angular/common';
 
+interface Crafting {
+  craftable: boolean;
+  previous?: number;   // Only present in upgraded weapons
+  branches?: number[]; // Upgrade paths
+  craftingMaterials?: Material[];
+  upgradeMaterials?: Material[];
+}
+interface Material {
+  quantity: number;
+  item: RewardItem;
+}
 interface Condition {
   type: string;
   subtype: string | null;
@@ -38,6 +49,26 @@ interface DropDisplay {
   conditions: string;
 }
 
+interface Weapon {
+  id: number;
+  name: string;
+  type: string;
+  attack?: { raw: number };
+  elements?: { type: string; damage: number }[];
+  crafting: Crafting; // Changed from optional to required
+  displayName?: string;
+  score?: number;
+  assets?: {
+    icon: string;
+    image: string;
+  };
+}
+
+const WEAPON_MATERIALS: { [key: string]: string[] } = {
+  // Example materials - expand this with actual game data
+  'Buster Sword 1': ['Iron Ore', 'Machalite Ore'],
+};
+
 @Component({
   selector: 'app-Subpage-Monster-Hunter',
   templateUrl: 'Subpage-monster-hunter.page.html',
@@ -48,14 +79,17 @@ interface DropDisplay {
     IonButtons, IonBackButton, IonCard, IonCardContent,
     IonSkeletonText, IonButton, IonIcon
   ],
+
 })
 export class SubpageMonsterHunterPage implements OnInit {
   monster: any;
   isLoading = true;
   isWeaponsLoading = true;
-  bestWeapons: any[] = [];
+  bestWeapons: Weapon[] = [];
   currentView: 'monster' | 'weapon' = 'monster';
-  selectedWeapon: any = null;
+  selectedWeapon: Weapon | null = null;
+  upgradedWeapons: Weapon[] = [];
+  isUpgradesLoading = false;
 
   constructor(
     private location: Location,
@@ -63,6 +97,13 @@ export class SubpageMonsterHunterPage implements OnInit {
     private monsterApiService: MonsterHunterApiService
   ) {}
 
+  getMaterials(weapon: Weapon): Material[] {
+    if (!weapon.crafting) return [];
+
+    return weapon.crafting.craftable
+      ? weapon.crafting.craftingMaterials || []
+      : weapon.crafting.upgradeMaterials || [];
+  }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
@@ -92,7 +133,6 @@ export class SubpageMonsterHunterPage implements OnInit {
     this.monsterApiService.getMonsterById(id).subscribe({
       next: (monster) => {
         this.monster = monster;
-        console.log('Monster rewards data:', this.monster?.rewards); // Debug logging
         this.processMonsterData();
         this.isLoading = false;
         this.loadWeapons();
@@ -118,15 +158,59 @@ export class SubpageMonsterHunterPage implements OnInit {
       }
     });
   }
+  private loadUpgradedWeapons(branchIds: number[]) {
+    if (branchIds.length === 0) {
+      this.upgradedWeapons = [];
+      return;
+    }
 
-  showWeapon(weapon: any) {
-    this.selectedWeapon = weapon;
-    this.currentView = 'weapon';
-    history.pushState(
-      { view: 'weapon', weaponId: weapon.id },
-      '',
-      this.location.path()
-    );
+    this.isUpgradesLoading = true;
+    this.monsterApiService.getWeaponsByIds(branchIds).subscribe({
+      next: (weapons) => {
+        this.upgradedWeapons = weapons;
+        this.isUpgradesLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading upgrades:', err);
+        this.upgradedWeapons = [];
+        this.isUpgradesLoading = false;
+      }
+    });
+  }
+
+  showWeapon(weapon: Weapon) {
+
+    this.monsterApiService.getWeaponById(weapon.id).subscribe({
+      next: (fullWeapon: any) => {
+        this.selectedWeapon = {
+          ...fullWeapon,
+          displayName: this.formatWeaponName(fullWeapon.name)
+
+        };
+// Temporary debug code - add to your showWeapon method
+        console.log('Selected Weapon Branches:', fullWeapon.crafting?.branches);
+        // ====== NEW CODE START ======
+        // Load upgraded versions if they exist
+        const upgradeIds = fullWeapon.crafting?.branches || [];
+        this.loadUpgradedWeapons(upgradeIds);
+        // ====== NEW CODE END ======
+
+        this.currentView = 'weapon';
+        history.pushState(
+          { view: 'weapon', weaponId: fullWeapon.id },
+          '',
+          this.location.path()
+        );
+      },
+      error: (err) => {
+        console.error('Error loading weapon details:', err);
+        this.selectedWeapon = { ...weapon };
+        this.currentView = 'weapon';
+        // ====== NEW CODE START ======
+        this.upgradedWeapons = []; // Clear any previous upgrades
+        // ====== NEW CODE END ======
+      }
+    });
   }
 
   goBackToMonster() {
@@ -154,8 +238,16 @@ export class SubpageMonsterHunterPage implements OnInit {
     img.src = 'assets/placeholder-monster.png';
     img.style.opacity = '1';
   }
+  private hasValidImage(weapon: Weapon): boolean {
+    // List of known problematic weapon IDs or names
+    const brokenWeapons = ['Gae Bolg 1', 'specific-broken-weapon-id'];
 
-  private calculateBestWeapons(weapons: any[]) {
+    return !!weapon.assets?.image &&
+      !brokenWeapons.includes(weapon.name.toLowerCase()) &&
+      !brokenWeapons.includes(weapon.id.toString());
+  }
+
+  private calculateBestWeapons(weapons: Weapon[]) {
     if (!this.monster?.weaknesses || !weapons) return;
 
     const weaknessMap = new Map<string, number>(
@@ -163,17 +255,22 @@ export class SubpageMonsterHunterPage implements OnInit {
     );
 
     this.bestWeapons = weapons
-      .filter(weapon => weapon.name.endsWith('1'))
+      .filter(weapon =>
+        weapon.crafting?.craftable &&
+        !weapon.crafting.previous &&
+        this.hasValidImage(weapon) &&
+        // Add this exact line to exclude Gae Bolg
+        weapon.name.toLowerCase() !== 'gae bolg' // Case-insensitive match
+      )
       .map(weapon => ({
         ...weapon,
         displayName: this.formatWeaponName(weapon.name),
-        score: this.calculateWeaponScore(weapon, weaknessMap)
+        score: this.calculateWeaponScore(weapon, weaknessMap),
       }))
       .sort((a, b) => b.score - a.score)
       .slice(0, 6);
   }
-
-  private calculateWeaponScore(weapon: any, weaknessMap: Map<string, number>): number {
+  private calculateWeaponScore(weapon: Weapon, weaknessMap: Map<string, number>): number {
     let elementScore = 0;
 
     if (weapon.elements?.length) {
@@ -187,7 +284,7 @@ export class SubpageMonsterHunterPage implements OnInit {
     return elementScore + attackScore;
   }
 
-  getWeaponImagePath(weapon: any): string {
+  getWeaponImagePath(weapon: Weapon): string {
     if (!weapon?.name) return 'assets/placeholder-weapon.png';
 
     if (weapon.type === 'great-sword' || weapon.type === 'long-sword') {
@@ -196,15 +293,38 @@ export class SubpageMonsterHunterPage implements OnInit {
     return `assets/Weapon/${weapon.type}/${weapon.name}.png`;
   }
 
-  handleWeaponImageError(event: Event, weapon: any) {
+  handleWeaponImageError(event: Event, weapon: Weapon) {
     const img = event.target as HTMLImageElement;
-    console.error(`Error loading weapon image for ${weapon.name}`);
+    console.warn(`Removing weapon with broken image: ${weapon.name} (ID: ${weapon.id})`);
+
+    // Remove the weapon from the bestWeapons array
+    this.bestWeapons = this.bestWeapons.filter(w => w.id !== weapon.id);
+
+    // Fallback to ensure UI consistency
     img.src = 'assets/placeholder-weapon.png';
     img.style.opacity = '1';
   }
+  public formatWeaponName(name: string): string {
+    return name
+      .replace(/\sI+$/, '')    // Remove Roman numerals
+      .replace(/\s\d+$/, '')   // Remove Arabic numbers
+      .replace(/-/g, ' ');     // Keep hyphen replacement
+  }
 
-  private formatWeaponName(name: string): string {
-    return name.slice(0, -1).replace(/-/g, ' ');
+  private getCraftingMaterials(weaponName: string): string[] {
+    // Exact match check
+    if (WEAPON_MATERIALS[weaponName]) {
+      return WEAPON_MATERIALS[weaponName];
+    }
+
+    // Handle numbered series
+    const baseName = weaponName.replace(/ \d+$/, '');
+    if (WEAPON_MATERIALS[baseName]) {
+      return WEAPON_MATERIALS[baseName];
+    }
+
+    // Fallback for unknown weapons
+    return ['Materials data not available'];
   }
 
   onWeaponImageLoad(event: Event) {
@@ -236,5 +356,4 @@ export class SubpageMonsterHunterPage implements OnInit {
         };
       });
   }
-
 }

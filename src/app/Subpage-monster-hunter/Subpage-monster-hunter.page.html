@@ -83,21 +83,22 @@
           <div class="weapons-grid">
             <div class="weapon-card" *ngFor="let weapon of bestWeapons" (click)="showWeapon(weapon)">
               <div class="weapon-bg-glow"></div>
-              <img [src]="getWeaponImagePath(weapon)"
+              <img [src]="weapon.assets?.image || 'assets/placeholder-weapon.png'"
                    class="weapon-image"
-                   (load)="onWeaponImageLoad($event)"
                    (error)="handleWeaponImageError($event, weapon)">
               <div class="weapon-name">{{ weapon.displayName || weapon.name }}</div>
-              <ion-icon name="star" class="star-icon" *ngIf="weapon.score > 0"></ion-icon>
+              <ion-icon name="star" class="star-icon"></ion-icon>
             </div>
           </div>
         </div>
-      </div>
     </div>
-
+    </div>
     <!-- Weapon View -->
     <div *ngIf="currentView === 'weapon' && selectedWeapon" class="weapon-view">
-      <img [src]="getWeaponImagePath(selectedWeapon)" class="main-image" [alt]="selectedWeapon.name" (error)="handleWeaponImageError($event, selectedWeapon)">
+      <img [src]="selectedWeapon.assets?.image || 'assets/placeholder-weapon.png'"
+           class="main-image"
+           [alt]="selectedWeapon.name"
+           (error)="handleWeaponImageError($event, selectedWeapon)">
       <h1 class="monster-name">{{ selectedWeapon.displayName || selectedWeapon.name }}</h1>
 
       <div class="info-section">
@@ -114,14 +115,62 @@
             </ul>
           </div>
         </div>
-
         <div class="weakness-section">
           <h3 class="subsection-title">Effectiveness against {{ monster?.name }}:</h3>
           <p class="detail-item">Combat Score: {{ selectedWeapon.score }}</p>
         </div>
+        <!-- Add Materials Section -->
+        <div class="drops-section" *ngIf="selectedWeapon.crafting">
+          <h3 class="subsection-title">
+            {{ selectedWeapon.crafting.craftable ? 'Crafting Materials' : 'Upgrade Materials' }}
+          </h3>
+          <div *ngIf="getMaterials(selectedWeapon).length > 0; else noMaterials">
+            <ul class="drop-list">
+              <li *ngFor="let material of getMaterials(selectedWeapon)" class="drop-item">
+                <span class="drop-name">{{ material.quantity }}x {{ material.item.name }}</span>
+                <span class="drop-chance">{{ material.item.rarity }}★</span>
+              </li>
+            </ul>
+          </div>
+
+          <ng-template #noMaterials>
+            <div class="no-drops">No materials required</div>
+          </ng-template>
+        </div>
+        <!-- Add after the materials section -->
+        <div class="upgrades-section" *ngIf="upgradedWeapons.length > 0">
+          <h3 class="subsection-title">Upgraded Versions</h3>
+
+          <div *ngIf="!isUpgradesLoading; else upgradesLoading">
+            <div class="weapons-grid">
+              <div class="weapon-card"
+                   *ngFor="let upgrade of upgradedWeapons"
+                   (click)="showWeapon(upgrade)">
+                <img [src]="upgrade.assets?.image || 'assets/placeholder-weapon.png'"
+                     class="weapon-image"
+                     (error)="handleWeaponImageError($event, upgrade)">
+                <div class="weapon-name">{{ formatWeaponName(upgrade.name) }}</div>
+                <div class="upgrade-indicator">
+                  <ion-icon name="arrow-up" class="upgrade-icon"></ion-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template #upgradesLoading>
+            <div class="loading-container">
+              <ion-skeleton-text
+                animated
+                style="width: 100%; height: 100px; margin: 5px 0;">
+              </ion-skeleton-text>
+            </div>
+          </ng-template>
+        </div>
+
       </div>
     </div>
   </div>
+
 
   <ng-template #loading>
     <div class="loading-container">
