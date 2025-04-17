@@ -13,7 +13,9 @@ export class LOZApiService {
   getAllMonsters(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/compendium/category/monsters`);
   }
-
+  getAllWeapons(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/compendium/category/equipment`);
+}
 
   getMonsterById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/monsters/${id}`);

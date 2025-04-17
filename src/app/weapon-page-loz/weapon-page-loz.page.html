@@ -1,13 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>weapon-page-loz</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="iphone-13-mini-11">
+  <!-- Welcome Banner -->
+  <div class="welcome-to-the-container">
+    <p class="welcome-to">Welcome to</p>
+    <p class="welcome-to">The Legend of Zelda:</p>
+    <p class="welcome-to">Breath of the Wild Compendium</p>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">weapon-page-loz</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Weapon List -->
+  <div class="weapon-list-container">
+    <div class="weapon-grid">
+      <ion-card *ngFor="let weapon of weapons" class="weapon-item">
+        <ion-card-header>
+          <ion-card-title>
+            <strong>{{ weapon.name | uppercase }}</strong>
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="weapon-content">
+          <img [src]="weapon.image" alt="{{ weapon.name }}" />
+
+          <!-- Button under the image, aligned right -->
+          <div class="rectangle-parent">
+            <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png" />
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
