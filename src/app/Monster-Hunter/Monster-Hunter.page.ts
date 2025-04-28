@@ -9,6 +9,7 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
 import { MonsterHunterApiService } from "../Monster-Hunter.api/Monster-Hunter.api.service";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Router, RouterLink } from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
   selector: 'app-Monster-Hunter',
@@ -21,7 +22,7 @@ import { Router, RouterLink } from "@angular/router";
     HttpClientModule, IonLabel, IonTabBar, IonTabButton,
     IonSearchbar, IonPopover, IonButton,
     IonInfiniteScroll, IonInfiniteScrollContent,
-    IonSkeletonText, RouterLink
+    IonSkeletonText, RouterLink, HeaderComponent
   ],
 })
 export class MonsterHunterPage implements OnInit {

@@ -14,9 +14,8 @@ import {IonButtons, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standa
   ]
 })
 export class HeaderComponent {
-  headerColor = '#ffffff'; // default color
-  title = 'My App';         // default title
-  activePage: 'default' | undefined;
+  title = 'HylianHunter';
+  activePage: string = 'default';
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -28,17 +27,14 @@ export class HeaderComponent {
 
   updateHeader(url: string) {
     if (url.includes('tab3')) {
-      this.headerColor = '#4CAF50'; // green
-      this.title = 'Home';
+      this.activePage = 'home';
     } else if (url.includes('LOZ')) {
-      this.headerColor = '#2196F3'; // blue
-      this.title = 'Weapons';
+      this.activePage = 'LOZ';
     } else if (url.includes('Monster-Hunter')) {
-      this.headerColor = '#F44336'; // red
-      this.title = 'Monsters';
+      this.activePage = 'monsters';
     } else {
-      this.headerColor = '#9E9E9E'; // grey
-      this.title = 'My App';
+      this.activePage = 'default';
     }
+    console.log('Active Page:', this.activePage); // Debugging
   }
 }

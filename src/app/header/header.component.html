@@ -1,10 +1,17 @@
-<ion-header [style.background]="'header-'+activePage">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <img src="assets/header1.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-    </ion-buttons>
-    <ion-title>HylianHunter</ion-title>
+<ion-header>
+  <ion-toolbar class="toolbar-no-padding">
+    <div class="group-parent">
+      <div class="rectangle-parent">
+        <div class="group-child"></div>
+        <!-- Logo/Thumbnail -->
+        <img
+          class="thumbnail-icon"
+          [src]="'assets/header1.png'"
+          alt="Logo"
+        />
+        <!-- Titel -->
+        <div class="hylian-hunter">Hylian Hunter</div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
-
-

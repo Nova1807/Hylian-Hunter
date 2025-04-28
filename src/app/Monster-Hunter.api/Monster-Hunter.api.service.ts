@@ -33,4 +33,5 @@ export class MonsterHunterApiService {
       `https://api.mhw-db.com/weapons?q={"id_in": [${ids.join(',')}]}`
     );
   }
+
 }
