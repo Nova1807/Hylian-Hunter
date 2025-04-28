@@ -14,6 +14,7 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
 import { HttpClientModule } from '@angular/common/http';
 import { LOZApiService } from '../LOZ.api/LOZ.api.service';
 import {RouterLink} from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
   selector: 'app-LOZ',
@@ -22,7 +23,7 @@ import {RouterLink} from "@angular/router";
   standalone: true,
   imports: [
     CommonModule, // <-- Füge das hier hinzu
-    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink, IonSearchbar
+    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink, IonSearchbar, HeaderComponent
   ],
   providers: [LOZApiService]
 })

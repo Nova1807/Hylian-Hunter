@@ -18,7 +18,8 @@
 
 .welcome-to {
   margin: 0;
-  font-family: 'Dancing Script', cursive;
+  margin-top:5px;
+  font-family: 'Dancing Script';
   font-size: 20px;
   color:white;
   letter-spacing: 0.05em;
@@ -27,8 +28,7 @@
 
 /* Search Bar */
 .search-container {
-  display: flex;
-  justify-content: flex-start;
+  justify-content:center;
   width: 100%;
   margin-left: -10px;
   padding: 10px 20px;

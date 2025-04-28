@@ -1,0 +1,33 @@
+ion-header {
+  --background: #607D8B; // Default background
+  --color: white;
+  transition: background-color 0.3s ease, background 0.3s ease;
+
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-home {
+  --background: #5C4945;
+}
+
+.header-weapons {
+  --background: #1E88E5; // blau
+}
+
+.header-monsters {
+  --background: #8E24AA; // lila
+}
+
+.header-default {
+  --background: linear-gradient(#e57a4c 20%, #f6c360 60%, #e57a4c);
+}
+
+ion-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
