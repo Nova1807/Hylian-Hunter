@@ -1,15 +1,13 @@
-<ion-header>
+<ion-header [ngClass]="'header-' + activePage">
   <ion-toolbar class="toolbar-no-padding">
     <div class="group-parent">
       <div class="rectangle-parent">
         <div class="group-child"></div>
-        <!-- Logo/Thumbnail -->
         <img
           class="thumbnail-icon"
           [src]="'assets/header1.png'"
           alt="Logo"
         />
-        <!-- Titel -->
         <div class="hylian-hunter">Hylian Hunter</div>
       </div>
     </div>

@@ -1,15 +1,23 @@
 ion-header {
-  height: 103px;
+  min-height: 103px;
+  position: relative;
+  z-index: 2;
+  box-shadow: none !important;
+  margin: 0 !important;
 
   ion-toolbar {
-    --background: none;
+    --background: transparent !important;
+    --min-height: 103px !important;
+    --padding-start: 0 !important; // Links: 0
+    --padding-end: 0 !important; // Rechts: 0
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
     padding: 0;
-    height: 100%;
 
     .group-parent {
       position: relative;
       width: 100%;
-      height: 103px;
+      min-height: 103px;
       font-family: 'Archivo Black', sans-serif;
       font-size: 25px;
       color: #ffffff;
@@ -18,11 +26,16 @@ ion-header {
       .rectangle-parent {
         position: absolute;
         inset: 0;
+        width: 100%;
+        height: 100%;
 
         .group-child {
           position: absolute;
           inset: 0;
-          background: none; // STANDARD: keine Farbe
+          width: 100%;
+          height: 100%;
+          border: none !important; // Umrandung entfernen
+          background: inherit; // Erbt den Hintergrund der Elternklasse
         }
       }
 
@@ -33,7 +46,8 @@ ion-header {
         width: 82px;
         height: 82px;
         object-fit: cover;
-        opacity: 0.7;
+        opacity: 1 !important; // Voll deckend
+        z-index: 1;
       }
 
       .hylian-hunter {
@@ -44,25 +58,25 @@ ion-header {
         margin-left: -149px;
         letter-spacing: 0.05em;
         line-height: 1;
+        z-index: 1;
       }
     }
   }
 
-  // Farbvarianten NUR auf den Seiten:
-
-  &.header-home ion-toolbar .group-child {
+  // Farbvarianten (Vollständige Abdeckung)
+  &.header-tab3 ion-toolbar .group-parent .rectangle-parent .group-child {
     background: linear-gradient(120.44deg, #736461, #483b49 56.61%, #28201e);
   }
 
-  &.header-LOZ ion-toolbar .group-child {
-    background: #1E88E5 !important; // Hier ist die LOZ-Farbe korrekt gesetzt
+  &.header-LOZ ion-toolbar .group-parent .rectangle-parent .group-child {
+    background: #1E88E5;
   }
 
-  &.header-monsters ion-toolbar .group-child {
-    background: linear-gradient(120.44deg, #736461, #483b49 56.61%, #28201e); // Figma-Farbe für Monsterseite
+  &.header-Monster-Hunter ion-toolbar .group-parent .rectangle-parent .group-child {
+    background: linear-gradient(120.44deg, #736461, #483b49 56.61%, #28201e);
   }
 
-  &.header-default ion-toolbar .group-child {
+  &.header-default ion-toolbar .group-parent .rectangle-parent .group-child {
     background: linear-gradient(#e57a4c 20%, #f6c360 60%, #e57a4c);
   }
 }
