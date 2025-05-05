@@ -1,12 +1,13 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { IonButtons, IonHeader, IonTitle, IonToolbar } from "@ionic/angular/standalone";
+import { IonButtons, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  encapsulation: ViewEncapsulation.None,   // <<< damit unsere Styles global greifen
   imports: [
     CommonModule,
     IonHeader,

@@ -1,34 +1,70 @@
-<app-header></app-header>
 
 <ion-content class="monster-content">
+  <app-header></app-header>
   <div class="header">
     <div class="title">Monster Hunter World</div>
 
     <div class="search-container">
       <div class="search-bar">
-        <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
+        <ion-searchbar
+          animated="true"
+          placeholder="Search"
+          [(ngModel)]="searchTerm"
+          (ionInput)="applyFilters()"
+        ></ion-searchbar>
       </div>
       <ion-button class="filter-button" id="popover-button">
         <img src="assets/Monster_Hunter_Pages/filter.png" class="filter-icon" alt="Filter">
       </ion-button>
 
-      <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+      <ion-popover trigger="popover-button" [dismissOnSelect]="false">
         <ng-template>
           <ion-content>
-            <ion-list>
-              <ion-item [button]="true" [detail]="false">Option 1</ion-item>
-              <ion-item [button]="true" [detail]="false">Option 2</ion-item>
-              <ion-item [button]="true" id="nested-trigger">More options...</ion-item>
+            <ion-list lines="full">
 
-              <ion-popover trigger="nested-trigger" [dismissOnSelect]="true" side="end">
-                <ng-template>
-                  <ion-content>
-                    <ion-list>
-                      <ion-item [button]="true" [detail]="false">Nested option</ion-item>
-                    </ion-list>
-                  </ion-content>
-                </ng-template>
-              </ion-popover>
+              <ion-list-header>
+                <ion-label>Filter Options</ion-label>
+              </ion-list-header>
+
+              <ion-item>
+                <ion-label>Typ</ion-label>
+                <ion-select multiple [(ngModel)]="selectedFilters.type" (ionChange)="applyFilters()">
+                  <ion-select-option *ngFor="let t of filterOptions.types" [value]="t">{{ t }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Spezies</ion-label>
+                <ion-select multiple [(ngModel)]="selectedFilters.species" (ionChange)="applyFilters()">
+                  <ion-select-option *ngFor="let s of filterOptions.species" [value]="s">{{ s }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Elements</ion-label>
+                <ion-select multiple [(ngModel)]="selectedFilters.elements" (ionChange)="applyFilters()">
+                  <ion-select-option *ngFor="let e of filterOptions.elements" [value]="e">{{ e }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Weaknesses</ion-label>
+                <ion-select multiple [(ngModel)]="selectedFilters.weaknesses" (ionChange)="applyFilters()">
+                  <ion-select-option *ngFor="let w of filterOptions.weaknesses" [value]="w">{{ w }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Ailments</ion-label>
+                <ion-select multiple [(ngModel)]="selectedFilters.ailments" (ionChange)="applyFilters()">
+                  <ion-select-option *ngFor="let a of filterOptions.ailments" [value]="a">{{ a }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item lines="none">
+                <ion-button expand="block" (click)="resetFilters()">Reset</ion-button>
+              </ion-item>
+
             </ion-list>
           </ion-content>
         </ng-template>
@@ -51,9 +87,6 @@
            loading="lazy">
       <div class="monster-details">
         <p><strong>Spezies:</strong> {{ displayedMonsters[0].species }}</p>
-        <p *ngIf="displayedMonsters[0].elements?.length > 0">
-          <strong>Elemente:</strong> {{ displayedMonsters[0].elements.join(', ') }}
-        </p>
       </div>
     </div>
   </ng-container>
