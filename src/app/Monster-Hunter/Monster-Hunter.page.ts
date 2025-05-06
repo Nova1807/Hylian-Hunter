@@ -120,36 +120,69 @@ export class MonsterHunterPage implements OnInit {
     this.filterOptions.locations = Array.from(set.locations).sort();
     this.filterOptions.ailments  = Array.from(set.ailments).sort();
   }
+  levenshteinDistance(a: string, b: string): number {
+    const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
+    for (let j = 0; j <= a.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        const cost = b[i - 1] === a[j - 1] ? 0 : 1;
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j] + 1,      // Deletion
+          matrix[i][j - 1] + 1,      // Insertion
+          matrix[i - 1][j - 1] + cost // Substitution
+        );
+      }
+    }
+
+    return matrix[b.length][a.length];
+  }
 
   /** Wendet Suche + alle aktiven Filter an */
   applyFilters() {
     const term = this.searchTerm.trim().toLowerCase();
 
-    // 1) Alle Monster nach Suchterm & Filterkriterien filtern
-    this.filteredMonsters = this.allMonsters.filter(m => {
-      const matchesSearch =
-        !term ||
-        m.name.toLowerCase().includes(term) ||
-        (m.description?.toLowerCase().includes(term));
+    let filtered = this.allMonsters.filter(monster => {
+      // Suche nach Name (genauer Treffer oder leerer Suchterm)
+      const nameMatch = term === '' || monster.name.toLowerCase().startsWith(term);
 
-      const matchType     = !this.selectedFilters.type.length    || this.selectedFilters.type.includes(m.type);
-      const matchSpecies  = !this.selectedFilters.species.length || this.selectedFilters.species.includes(m.species);
-      const matchElements = !this.selectedFilters.elements.length || m.elements?.some((e: string) => this.selectedFilters.elements.includes(e));
-      const matchWeak     = !this.selectedFilters.weaknesses.length || m.weaknesses?.some((w: any) => this.selectedFilters.weaknesses.includes(w.element));
-      const matchLoc      = !this.selectedFilters.locations.length || m.locations?.some((l: any) => this.selectedFilters.locations.includes(l.name));
-      const matchAil      = !this.selectedFilters.ailments.length || m.ailments?.some((a: any) => this.selectedFilters.ailments.includes(a.name));
+      // Filter: Typ
+      const typeMatch = this.selectedFilters.type.length === 0 || this.selectedFilters.type.includes(monster.type);
 
-      return matchesSearch && matchType && matchSpecies && matchElements && matchWeak && matchLoc && matchAil;
+      // Filter: Spezies
+      const speciesMatch = this.selectedFilters.species.length === 0 || this.selectedFilters.species.includes(monster.species);
+
+      // Filter: Elemente
+      const elementsMatch = this.selectedFilters.elements.length === 0 ||
+        (monster.elements && monster.elements.some((e: string) => this.selectedFilters.elements.includes(e)));
+
+      // Filter: Schwächen
+      const weaknessesMatch = this.selectedFilters.weaknesses.length === 0 ||
+        (monster.weaknesses && monster.weaknesses.some((w: any) => this.selectedFilters.weaknesses.includes(w.element)));
+
+      // Filter: Ailments
+      const ailmentsMatch = this.selectedFilters.ailments.length === 0 ||
+        (monster.ailments && monster.ailments.some((a: any) => this.selectedFilters.ailments.includes(a.name)));
+
+      return nameMatch && typeMatch && speciesMatch && elementsMatch && weaknessesMatch && ailmentsMatch;
     });
 
-    // Infinite Scroll wieder aktivieren
+    // Fuzzy-Suche, wenn kein exakter Name-Treffer
+    if (filtered.length === 0 && term.length >= 2) {
+      filtered = this.allMonsters.filter(monster =>
+        this.levenshteinDistance(monster.name.toLowerCase(), term) <= 2
+      );
+    }
+
+    this.filteredMonsters = filtered;
+    this.currentIndex = this.batchSize;
+    this.displayedMonsters = this.filteredMonsters.slice(0, this.currentIndex);
+
     if (this.infiniteScroll) {
       this.infiniteScroll.disabled = false;
     }
-
-    // 2) Erste Seite befüllen
-    this.currentIndex = this.batchSize;
-    this.displayedMonsters = this.filteredMonsters.slice(0, this.currentIndex);
   }
 
   /** Reset aller Filter und Suche */

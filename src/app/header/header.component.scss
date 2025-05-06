@@ -54,8 +54,10 @@ ion-header {
         position: absolute;
         top: 7px;
         left: 9px;
-        width: 82px;
-        height: 82px;
+        width: 130px;
+        height: 130px;
+        margin-left:-5;
+        padding-bottom: 36px;
         object-fit: cover;
         opacity: 1 !important;
         z-index: 1;
@@ -64,7 +66,7 @@ ion-header {
       .hylian-hunter {
         position: absolute;
         top: 38px;
-        left: 50%;
+        left: 52%;
         width: 298px;
         margin-left: -149px;
         letter-spacing: 0.05em;
@@ -76,7 +78,7 @@ ion-header {
 
   /* Farbvarianten */
   &.header-tab3 ion-toolbar .group-parent .rectangle-parent .group-child {
-    background: linear-gradient(120.44deg, #736461, #483b49 56.61%, #28201e);
+    background: linear-gradient(120.44deg, #E57A4C, #28201E);
   }
 
   &.header-LOZ ion-toolbar .group-parent .rectangle-parent .group-child {
@@ -84,7 +86,7 @@ ion-header {
   }
 
   &.header-Monster-Hunter ion-toolbar .group-parent .rectangle-parent .group-child {
-    background: linear-gradient(120.44deg, #736461, #483b49 56.61%, #28201e);
+    background: linear-gradient(180deg, #736461, #483b49 56.61%, #201515);
   }
 
   &.header-default ion-toolbar .group-parent .rectangle-parent .group-child {
