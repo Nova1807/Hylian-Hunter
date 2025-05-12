@@ -1,4 +1,3 @@
-// All imports unchanged
 import { Component, OnInit } from '@angular/core';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
@@ -10,7 +9,6 @@ import { ActivatedRoute } from '@angular/router';
 import { MonsterHunterApiService } from "../Monster-Hunter.api/Monster-Hunter.api.service";
 import { Location } from '@angular/common';
 
-// Interfaces unchanged
 interface Crafting {
   craftable: boolean;
   previous?: number;
@@ -62,7 +60,6 @@ interface Weapon {
   };
 }
 
-// Korrigierte Monster-Reihenfolge
 const MONSTER_ORDER: string[] = [
   // Kleintiere
   'Aptonoth', 'Jagras', 'Mernos', 'Mosswine', 'Kelbi', 'Noios', 'Gajau',

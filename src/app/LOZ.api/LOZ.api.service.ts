@@ -17,7 +17,7 @@ export class LOZApiService {
     return this.http.get<any[]>(`${this.baseUrl}/compendium/category/equipment`);
 }
   getWeaponById(id: string) {
-    return this.http.get(`${this.baseUrl}/weapon/${id}`);
+    return this.http.get(`https://botw-compendium.herokuapp.com/api/v3/compendium/entry/${id}`);
   }
 
 

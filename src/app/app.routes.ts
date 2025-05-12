@@ -18,7 +18,7 @@ export const routes: Routes = [
     loadComponent: () => import('./Subpage-monster-hunter/Subpage-monster-hunter.page').then( m => m.SubpageMonsterHunterPage)
   },
   {
-    path: 'weapon-detail/:id',
+    path: 'weapon-detail',
     loadComponent: () => import('./detailsicht-loz/detailsicht-loz.component.page').then(m => m.DetailsichtLozComponentPage)
   }
 

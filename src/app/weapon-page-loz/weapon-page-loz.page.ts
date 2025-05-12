@@ -12,7 +12,7 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 import {HttpClientModule} from "@angular/common/http";
-import {RouterLink} from "@angular/router";
+import {Router,RouterLink} from "@angular/router";
 import {LOZApiService} from "../LOZ.api/LOZ.api.service";
 @Component({
   selector: 'app-weapon-page-loz',
@@ -27,7 +27,10 @@ import {LOZApiService} from "../LOZ.api/LOZ.api.service";
 export class WeaponPageLozPage implements OnInit {
   weapons: any[] = [];
 
-  constructor(private lOZApiService: LOZApiService) {
+  constructor(private lOZApiService: LOZApiService,
+              private router: Router
+  ) {
+
   }
 
   ngOnInit() {
@@ -37,6 +40,13 @@ export class WeaponPageLozPage implements OnInit {
     this.lOZApiService.getAllWeapons().subscribe((data: any) => {
       console.log('API Response:', data); // API-Daten prüfen
       this.weapons = data.data;
+    });
+  }
+
+  navigateToDetail(WeaponId: number) {
+    this.router.navigate(['/weapon-detail'], {
+      queryParams: { id: WeaponId },
+      queryParamsHandling: 'merge'
     });
   }
 }
