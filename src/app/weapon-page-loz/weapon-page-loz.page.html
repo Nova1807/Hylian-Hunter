@@ -9,7 +9,7 @@
   <!-- Weapon List -->
   <div class="weapon-list-container">
     <div class="weapon-grid">
-      <ion-card *ngFor="let weapon of weapons" class="weapon-item">
+      <ion-card *ngFor="let weapon of weapons" class="weapon-item" [routerLink]="'[', weapon.id">
         <ion-card-header>
           <ion-card-title>
             <strong>{{ weapon.name | uppercase }}</strong>

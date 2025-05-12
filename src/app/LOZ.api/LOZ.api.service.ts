@@ -1,6 +1,6 @@
  import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,11 @@ export class LOZApiService {
   getAllWeapons(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/compendium/category/equipment`);
 }
-
-  getMonsterById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/monsters/${id}`);
+  getWeaponById(id: string) {
+    return this.http.get(`${this.baseUrl}/weapon/${id}`);
   }
+
+
+
+
 }

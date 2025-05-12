@@ -1,0 +1,19 @@
+<ion-content>
+  <div *ngIf="loading" class="loading-spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div *ngIf="weapon" class="weapon-detail-container">
+    <h1>{{ weapon.name | uppercase }}</h1>
+
+    <img [src]="weapon.image" alt="{{ weapon.name }}" class="detail-image" />
+
+    <div class="weapon-info">
+      <p><strong>Category:</strong> {{ weapon.category }}</p>
+      <p><strong>Description:</strong> {{ weapon.description }}</p>
+      <p><strong>Attack:</strong> {{ weapon.attack }}</p>
+      <p><strong>Defense:</strong> {{ weapon.defense }}</p>
+      <p *ngIf="weapon.properties"><strong>Properties:</strong> {{ weapon.properties }}</p>
+    </div>
+  </div>
+</ion-content>
