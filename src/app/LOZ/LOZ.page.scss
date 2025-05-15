@@ -80,6 +80,7 @@
   background: linear-gradient(104.11deg, #e57a4c, #f4d384);
   border-radius: 18px;
   margin: 20px auto;
+  margin-top: -10px;
   overflow: hidden;
 }
 
@@ -113,7 +114,7 @@
 
 .go-to-weapons {
   font-family: 'Inter';
-  font-size: 14px;
+  font-size: 17px;
   letter-spacing: 0.05em;
   color:white;
 }
@@ -380,11 +381,6 @@ ion-searchbar::part(icon) {
   }
 }
 
-.iphone-13-mini-11 {
-  animation: zoomOutIn 0.9s ease-out forwards;
-  opacity: 0;
-  transform-origin: center;
-}
 @keyframes revealLeftToRight {
   0% {
     clip-path: inset(0 100% 0 0);

@@ -2,7 +2,8 @@ import {Component, NgIterable, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  IonButton,
+  IonBackButton,
+  IonButton, IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader, IonCardTitle,
@@ -21,7 +22,7 @@ import {LOZApiService} from "../LOZ.api/LOZ.api.service";
   standalone: true,
   imports: [
     CommonModule, // <-- Füge das hier hinzu
-    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink, IonSearchbar
+    IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink, IonSearchbar, IonButtons, IonBackButton
   ],providers: [LOZApiService]
 })
 export class WeaponPageLozPage implements OnInit {

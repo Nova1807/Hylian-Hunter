@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LOZApiService } from '../LOZ.api/LOZ.api.service';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detailsicht-loz',
@@ -17,9 +18,12 @@ export class DetailsichtLozComponentPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private lozApi: LOZApiService
+    private lozApi: LOZApiService,
+    private location: Location,
   ) {}
-
+  goBack() {
+    this.location.back(); // Zurück zur vorherigen Seite
+  }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];

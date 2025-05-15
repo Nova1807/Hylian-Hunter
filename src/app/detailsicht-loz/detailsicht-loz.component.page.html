@@ -1,21 +1,25 @@
 <ion-content>
-  <div *ngIf="loading" class="loading-spinner">
-    <ion-spinner name="crescent"></ion-spinner>
+  <div *ngIf="weapon" class="weapon-detail-container">
+    <div class="header-section">
+      <button class="back-button" (click)="goBack()">Back</button>
+      <h1>{{ weapon?.data?.name | uppercase }}</h1>
+      <img [src]="weapon?.data?.image" alt="{{ weapon?.data?.name }}" class="detail-image" />
+    </div>
+
+    <div class="info-section">
+      <div class="weapon-info">
+        <p><strong>Category:</strong> {{ weapon?.data?.category }}</p>
+        <p><strong>Description:</strong> {{ weapon?.data?.description }}</p>
+        <p><strong>Attack:</strong> {{ weapon?.data?.properties?.attack }}</p>
+        <p><strong>Defense:</strong> {{ weapon?.data?.properties?.defense }}</p>
+        <p *ngIf="weapon?.data?.common_locations">
+          <strong>Found in:</strong> {{ weapon?.data?.common_locations?.join(', ') }}
+        </p>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="weapon" class="weapon-detail-container">
-    <h1>{{ weapon?.data?.name | uppercase }}</h1>
-
-    <img [src]="weapon?.data?.image" alt="{{ weapon?.data?.name }}" class="detail-image" />
-
-    <div class="weapon-info">
-      <p><strong>Category:</strong> {{ weapon?.data?.category }}</p>
-      <p><strong>Description:</strong> {{ weapon?.data?.description }}</p>
-      <p><strong>Attack:</strong> {{ weapon?.data?.properties?.attack }}</p>
-      <p><strong>Defense:</strong> {{ weapon?.data?.properties?.defense }}</p>
-      <p *ngIf="weapon?.data?.common_locations">
-        <strong>Found in:</strong> {{ weapon?.data?.common_locations?.join(', ') }}
-      </p>
-    </div>
+  <div *ngIf="loading" class="loading-spinner">
+    <ion-spinner name="crescent"></ion-spinner>
   </div>
 </ion-content>
