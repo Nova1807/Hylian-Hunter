@@ -3,6 +3,10 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
+    loadComponent: () => import('./animation/animation.page').then(m => m.AnimationPage)
+  },
+  {
+    path: 'tabs',
     loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
   },
   {
@@ -20,8 +24,9 @@ export const routes: Routes = [
   {
     path: 'weapon-detail',
     loadComponent: () => import('./detailsicht-loz/detailsicht-loz.component.page').then(m => m.DetailsichtLozComponentPage)
+  },
+  {
+    path: 'animation',
+    loadComponent: () => import('./animation/animation.page').then( m => m.AnimationPage)
   }
-
-
-
 ];

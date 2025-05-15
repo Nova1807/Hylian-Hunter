@@ -3,7 +3,7 @@ import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
-    path: 'tabs',
+    path: '', // Empty path since we're already under "/tabs"
     component: TabsPage,
     children: [
       {
@@ -21,16 +21,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../tab3/tab3.page').then((m) => m.Tab3Page),
       },
+      // Default route for tabs
       {
         path: '',
-        redirectTo: '/tabs/Monster-Hunter',
+        redirectTo: 'Monster-Hunter',
         pathMatch: 'full',
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/tab3',
-    pathMatch: 'full',
-  },
+  }
 ];
