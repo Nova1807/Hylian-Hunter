@@ -19,6 +19,9 @@ export class LOZApiService {
   getWeaponById(id: string) {
     return this.http.get(`https://botw-compendium.herokuapp.com/api/v3/compendium/entry/${id}`);
   }
+  getMonsterById(id: string) {
+    return this.http.get<any>(`https://botw-compendium.herokuapp.com/api/v3/compendium/entry/${id}`);
+  }
 
 
 

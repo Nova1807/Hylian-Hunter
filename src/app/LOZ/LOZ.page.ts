@@ -42,4 +42,5 @@ export class LOZPage implements OnInit {
       this.monsters = data.data;
     });
   }
+
 }

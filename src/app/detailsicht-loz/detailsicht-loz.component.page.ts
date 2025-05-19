@@ -14,31 +14,50 @@ import { Location } from '@angular/common';
 })
 export class DetailsichtLozComponentPage implements OnInit {
   weapon: any;
+  monster: any;
   loading = true;
+  currentView:'weapon'|'monster' = 'weapon';
 
   constructor(
     private route: ActivatedRoute,
     private lozApi: LOZApiService,
     private location: Location,
   ) {}
+
   goBack() {
     this.location.back(); // Zurück zur vorherigen Seite
   }
+
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
-      if (id) {
+      const type = params['type']; // <-- Neu: Typ auslesen
+
+      if (id && type === 'weapon') {
         this.lozApi.getWeaponById(id).subscribe({
           next: (response) => {
-            this.weapon = response; // The full response object
-            console.log('Formatted Data:', this.weapon);
+            this.weapon = response;
             this.loading = false;
           },
           error: (err) => {
-            console.error('Error loading weapon:', err);
+            console.error('Fehler beim Laden der Waffe:', err);
             this.loading = false;
           }
         });
+      } else if (id && type === 'monster') {
+        this.lozApi.getMonsterById(id).subscribe({
+          next: (response) => {
+            this.monster = response;
+            this.loading = false;
+          },
+          error: (err) => {
+            console.error('Fehler beim Laden des Monsters:', err);
+            this.loading = false;
+          }
+        });
+      } else {
+        console.warn('Kein gültiger Typ oder keine ID übergeben');
+        this.loading = false;
       }
     });
   }

@@ -1,10 +1,13 @@
 <ion-content>
+  <!-- Weapon Detail -->
+  <ng-container *ngIf="currentView==='weapon'">
   <div *ngIf="weapon" class="weapon-detail-container">
     <div class="header-section">
       <button class="back-button" (click)="goBack()">Back</button>
       <h1>{{ weapon?.data?.name | uppercase }}</h1>
       <img [src]="weapon?.data?.image" alt="{{ weapon?.data?.name }}" class="detail-image" />
     </div>
+
 
     <div class="info-section">
       <div class="weapon-info">
@@ -18,7 +21,30 @@
       </div>
     </div>
   </div>
+  </ng-container>
+  <!-- Monster Detail -->
+  <ng-container *ngIf="currentView==='monster'">
+  <div *ngIf="monster" class="monster-detail-container">
+    <div class="header-section">
+      <button class="back-button" (click)="goBack()">Back</button>
+      <h1>{{ monster?.data?.name | uppercase }}</h1>
+      <img [src]="monster?.data?.image" alt="{{ monster?.data?.name }}" class="detail-image" />
+    </div>
 
+    <div class="info-section">
+      <div class="monster-info">
+        <p><strong>Species:</strong> {{ monster?.data?.species }}</p>
+        <p><strong>Description:</strong> {{ monster?.data?.description }}</p>
+        <p><strong>Habitat:</strong> {{ monster?.data?.habitat }}</p>
+        <p><strong>Weakness:</strong> {{ monster?.data?.weakness }}</p>
+        <p *ngIf="monster?.data?.common_locations">
+          <strong>Found in:</strong> {{ monster?.data?.common_locations?.join(', ') }}
+        </p>
+      </div>
+    </div>
+  </div>
+  </ng-container>
+  <!-- Loading Spinner -->
   <div *ngIf="loading" class="loading-spinner">
     <ion-spinner name="crescent"></ion-spinner>
   </div>

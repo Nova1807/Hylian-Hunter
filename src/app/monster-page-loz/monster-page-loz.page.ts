@@ -1,35 +1,48 @@
-import {Component, NgIterable, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader, IonCardTitle,
-  IonContent,
-  IonHeader, IonList, IonSearchbar,
+  IonHeader,
+  IonToolbar,
   IonTitle,
-  IonToolbar
+  IonContent,
+  IonList,
+  IonCardContent,
+  IonCardTitle,
+  IonCard,
+  IonCardHeader,
+  IonButton,
+  IonSearchbar
 } from '@ionic/angular/standalone';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterLink} from "@angular/router";
-import {LOZApiService} from "../LOZ.api/LOZ.api.service";
+import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { LOZApiService } from '../LOZ.api/LOZ.api.service';
 
 @Component({
   selector: 'app-monster-page-loz',
   templateUrl: './monster-page-loz.page.html',
   styleUrls: ['./monster-page-loz.page.scss'],
   standalone: true,
-  imports:[
-  CommonModule, // <-- Füge das hier hinzu
-  IonHeader, IonToolbar, IonTitle, IonContent, HttpClientModule, IonList, IonCardContent, IonCardTitle, IonCard, IonCardHeader, IonButton, RouterLink, IonSearchbar
-], providers: [LOZApiService]
+  imports: [
+    CommonModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    HttpClientModule,
+    IonList,
+    IonCardContent,
+    IonCardTitle,
+    IonCard,
+    IonCardHeader,
+    IonButton,
+    IonSearchbar
+  ],
+  providers: [LOZApiService]
 })
-
 export class MonsterPageLozPage implements OnInit {
   monsters: any[] = [];
 
-  constructor(private lOZApiService: LOZApiService) {}
+  constructor(private lOZApiService: LOZApiService, private router: Router) {}
 
   ngOnInit() {
     this.loadMonsters();
@@ -41,7 +54,11 @@ export class MonsterPageLozPage implements OnInit {
       this.monsters = data.data;
     });
   }
-}
 
-export class MonsterPageLoz {
+  navigateToDetail(monsterId: number) {
+    console.log('Navigiere zu Monster mit ID:', monsterId);
+    this.router.navigate(['/detailsicht-loz'], {
+      queryParams: { id: monsterId, type: 'monster' }
+    });
+  }
 }

@@ -7,12 +7,13 @@
   </div>
 
   <!-- Monster List -->
-  <div class="monster-list-container">
-    <div class="monster-grid">
-      <ion-card *ngFor="let monster of monsters" class="monster-item">
-        <ion-card-header>
-          <ion-card-title><strong>{{ monster.name | uppercase }}</strong></ion-card-title>
-        </ion-card-header>
+    <div class="monster-list-container">
+      <div class="monster-grid">
+        <ion-card *ngFor="let monster of monsters" class="monster-item" (click)="navigateToDetail(monster.id)">
+          <ion-card-header>
+            <ion-card-title><strong>{{ monster.name | uppercase }}</strong>
+            </ion-card-title>
+          </ion-card-header>
         <ion-card-content class="monster-content">
           <img [src]="monster.image" alt="{{ monster.name }}" />
           <div class="rectangle-parent">
