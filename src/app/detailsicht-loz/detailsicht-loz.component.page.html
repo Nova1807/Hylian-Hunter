@@ -1,50 +1,40 @@
 <ion-content>
-  <!-- Weapon Detail -->
-  <ng-container *ngIf="currentView==='weapon'">
-  <div *ngIf="weapon" class="weapon-detail-container">
+  <div *ngIf="entry" class="detail-container">
     <div class="header-section">
       <button class="back-button" (click)="goBack()">Back</button>
-      <h1>{{ weapon?.data?.name | uppercase }}</h1>
-      <img [src]="weapon?.data?.image" alt="{{ weapon?.data?.name }}" class="detail-image" />
-    </div>
-
-
-    <div class="info-section">
-      <div class="weapon-info">
-        <p><strong>Category:</strong> {{ weapon?.data?.category }}</p>
-        <p><strong>Description:</strong> {{ weapon?.data?.description }}</p>
-        <p><strong>Attack:</strong> {{ weapon?.data?.properties?.attack }}</p>
-        <p><strong>Defense:</strong> {{ weapon?.data?.properties?.defense }}</p>
-        <p *ngIf="weapon?.data?.common_locations">
-          <strong>Found in:</strong> {{ weapon?.data?.common_locations?.join(', ') }}
-        </p>
-      </div>
-    </div>
-  </div>
-  </ng-container>
-  <!-- Monster Detail -->
-  <ng-container *ngIf="currentView==='monster'">
-  <div *ngIf="monster" class="monster-detail-container">
-    <div class="header-section">
-      <button class="back-button" (click)="goBack()">Back</button>
-      <h1>{{ monster?.data?.name | uppercase }}</h1>
-      <img [src]="monster?.data?.image" alt="{{ monster?.data?.name }}" class="detail-image" />
+      <h1>{{ entry.name | uppercase }}</h1>
+      <img [src]="entry.image" alt="{{ entry.name }}" class="detail-image" />
     </div>
 
     <div class="info-section">
-      <div class="monster-info">
-        <p><strong>Species:</strong> {{ monster?.data?.species }}</p>
-        <p><strong>Description:</strong> {{ monster?.data?.description }}</p>
-        <p><strong>Habitat:</strong> {{ monster?.data?.habitat }}</p>
-        <p><strong>Weakness:</strong> {{ monster?.data?.weakness }}</p>
-        <p *ngIf="monster?.data?.common_locations">
-          <strong>Found in:</strong> {{ monster?.data?.common_locations?.join(', ') }}
+      <!-- Gemeinsame Felder -->
+      <p><strong>Category:</strong> {{ entry.category }}</p>
+      <p><strong>Description:</strong> {{ entry.description }}</p>
+      <p *ngIf="entry.common_locations">
+        <strong>Found in:</strong> {{ entry.common_locations.join(', ') }}
+      </p>
+
+      <!-- Waffenspezifische Felder -->
+      <ng-container *ngIf="entry.category === 'Equipment'">
+        <p><strong>Attack:</strong> {{ entry.properties.attack }}</p>
+        <p><strong>Defense:</strong> {{ entry.properties.defense }}</p>
+      </ng-container>
+
+      <!-- Monsterspezifische Felder -->
+      <ng-container *ngIf="entry.category === 'Monsters'">
+        <p *ngIf="entry.hp"><strong>HP:</strong> {{ entry.hp }}</p>
+        <p *ngIf="entry.attack"><strong>Attack:</strong> {{ entry.attack }}</p>
+        <p *ngIf="entry.defense"><strong>Defense:</strong> {{ entry.defense }}</p>
+        <p *ngIf="entry.drops?.length">
+          <strong>Drops:</strong> {{ entry.drops.join(', ') }}
         </p>
-      </div>
+        <p *ngIf="entry.locations?.length">
+          <strong>Locations:</strong> {{ entry.locations.join(', ') }}
+        </p>
+      </ng-container>
     </div>
   </div>
-  </ng-container>
-  <!-- Loading Spinner -->
+
   <div *ngIf="loading" class="loading-spinner">
     <ion-spinner name="crescent"></ion-spinner>
   </div>

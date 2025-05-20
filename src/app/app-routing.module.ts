@@ -1,30 +1,40 @@
-// app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { WeaponPageLoz } from './weapon-page-loz/weapon-page-loz.page';
-import { MonsterPageLoz } from './monster-page-loz/monster-page-loz.page';
-import {SubpageMonsterHunterPage } from './Subpage-monster-hunter/Subpage-monster-hunter.page';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    redirectTo: 'tabs',
+    pathMatch: 'full'
+  },
+  {
+    path: 'tabs',
+    loadChildren: () =>
+      import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'weapon-page-loz',
-    component: WeaponPageLoz
+    loadComponent: () =>
+      import('./weapon-page-loz/weapon-page-loz.page').then(m => m.WeaponPageLozPage)
   },
   {
     path: 'monster-page-loz',
-    component: MonsterPageLoz
+    loadComponent: () =>
+      import('./monster-page-loz/monster-page-loz.page').then(m => m.MonsterPageLozPage)
   },
   {
     path: 'subpage-monster-hunter',
-    component: SubpageMonsterHunterPage
+    loadComponent: () =>
+      import('./Subpage-monster-hunter/Subpage-monster-hunter.page').then(m => m.SubpageMonsterHunterPage)
   },
   {
-    path: 'weapon-detail/:id',
-    loadComponent: () => import('./detailsicht-loz/detailsicht-loz.component.page').then(m => m.DetailsichtLozComponentPage)
+    path: 'weapon-detail',
+    loadComponent: () =>
+      import('./detailsicht-loz/detailsicht-loz.component.page').then(m => m.DetailsichtLozComponentPage)
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 

@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonList,
-  IonCardContent,
-  IonCardTitle,
-  IonCard,
-  IonCardHeader,
-  IonButton,
-  IonSearchbar
-} from '@ionic/angular/standalone';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton, IonSpinner
+} from '@ionic/angular/standalone';
 import { LOZApiService } from '../LOZ.api/LOZ.api.service';
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-monster-page-loz',
@@ -24,41 +25,69 @@ import { LOZApiService } from '../LOZ.api/LOZ.api.service';
   standalone: true,
   imports: [
     CommonModule,
+    HttpClientModule,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-    HttpClientModule,
-    IonList,
-    IonCardContent,
-    IonCardTitle,
+    IonSearchbar,
     IonCard,
     IonCardHeader,
-    IonButton,
-    IonSearchbar
+    IonCardTitle,
+    IonCardContent,
+    IonButtons,
+    IonBackButton,
+    IonSpinner,
+    FormsModule
   ],
   providers: [LOZApiService]
 })
 export class MonsterPageLozPage implements OnInit {
   monsters: any[] = [];
+  loading = true;
+  searchTerm: string = '';
+  allMonsters: any[] = [];
 
-  constructor(private lOZApiService: LOZApiService, private router: Router) {}
+
+  constructor(
+    private lozApiService: LOZApiService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadMonsters();
   }
 
   loadMonsters() {
-    this.lOZApiService.getAllMonsters().subscribe((data: any) => {
-      console.log('API Response:', data); // API-Daten prüfen
-      this.monsters = data.data;
+    this.lozApiService.getAllMonsters().subscribe({
+      next: (data: any) => {
+        this.allMonsters = data.data;
+        this.monsters = [...this.allMonsters];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading monsters:', err);
+        this.loading = false;
+      }
     });
   }
 
-  navigateToDetail(monsterId: number) {
-    console.log('Navigiere zu Monster mit ID:', monsterId);
-    this.router.navigate(['/detailsicht-loz'], {
-      queryParams: { id: monsterId, type: 'monster' }
+  applyFilters() {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (!term) {
+      this.monsters = [...this.allMonsters];
+      return;
+    }
+
+    this.monsters = this.allMonsters.filter(monster =>
+      monster.name.toLowerCase().includes(term)
+    );
+  }
+
+  navigateToDetail(monsterId: string) {
+    this.router.navigate(['/weapon-detail'], {
+      queryParams: { id: monsterId },
+      queryParamsHandling: 'merge'
     });
   }
 }

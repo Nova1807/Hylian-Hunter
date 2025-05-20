@@ -13,10 +13,8 @@ import { Location } from '@angular/common';
   imports: [CommonModule, IonicModule]
 })
 export class DetailsichtLozComponentPage implements OnInit {
-  weapon: any;
-  monster: any;
+  entry: any;
   loading = true;
-  currentView:'weapon'|'monster' = 'weapon';
 
   constructor(
     private route: ActivatedRoute,
@@ -25,39 +23,24 @@ export class DetailsichtLozComponentPage implements OnInit {
   ) {}
 
   goBack() {
-    this.location.back(); // Zurück zur vorherigen Seite
+    this.location.back();
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
-      const type = params['type']; // <-- Neu: Typ auslesen
-
-      if (id && type === 'weapon') {
-        this.lozApi.getWeaponById(id).subscribe({
+      if (id) {
+        this.lozApi.getEntryById(id).subscribe({
           next: (response) => {
-            this.weapon = response;
+            this.entry = response.data;
+            console.log('Entry Data:', this.entry);
             this.loading = false;
           },
           error: (err) => {
-            console.error('Fehler beim Laden der Waffe:', err);
+            console.error('Error loading entry:', err);
             this.loading = false;
           }
         });
-      } else if (id && type === 'monster') {
-        this.lozApi.getMonsterById(id).subscribe({
-          next: (response) => {
-            this.monster = response;
-            this.loading = false;
-          },
-          error: (err) => {
-            console.error('Fehler beim Laden des Monsters:', err);
-            this.loading = false;
-          }
-        });
-      } else {
-        console.warn('Kein gültiger Typ oder keine ID übergeben');
-        this.loading = false;
       }
     });
   }

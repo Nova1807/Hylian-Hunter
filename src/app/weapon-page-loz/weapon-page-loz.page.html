@@ -11,14 +11,18 @@
 
   <!-- Search & Filter Container -->
   <div class="search-container">
-    <div class="search-bar">
+    <div class="custom-searchbar-wrapper">
       <ion-searchbar
-        animated="true"
-        placeholder="Search"
         [(ngModel)]="searchTerm"
         (ionInput)="applyFilters()"
+        animated="true"
+        placeholder="Search"
         show-clear-button="always"
-        mode="ios">
+        mode="ios"
+        class="transparent-searchbar">
+        <div class="rectangle-div">
+          <img class="icon" src="assets/Monster_Hunter_Pages/filter.png" />
+        </div>
       </ion-searchbar>
     </div>
   </div>
