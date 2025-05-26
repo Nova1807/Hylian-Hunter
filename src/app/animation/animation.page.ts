@@ -1,21 +1,19 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AnimationController, IonContent, NavController } from '@ionic/angular';
 
 @Component({
   standalone: true,
   selector: 'app-splash',
-  imports: [CommonModule, IonicModule],
+  imports: [IonicModule],
   template: `
-    <ion-content class="splash-screen" fullscreen>
+    <ion-content #splashContent class="splash-screen" fullscreen>
       <video
         #splashVideo
         autoplay
         muted
         playsinline
         preload="auto"
-        (ended)="navigateToHome()"
+        (ended)="startTransition()"
         class="splash-video">
         <source src="assets/animations/startup.mp4" type="video/mp4" />
       </video>
@@ -24,38 +22,63 @@ import { IonicModule } from '@ionic/angular';
   styles: [`
     .splash-screen {
       --background: transparent;
-      padding: 0;
-      margin: 0;
+      opacity: 1;
+      z-index: 2;
     }
     .splash-video {
       position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      top: 0;
-      left: 0;
+      z-index: 2;
     }
   `]
 })
 export class AnimationPage implements AfterViewInit {
   @ViewChild('splashVideo') videoElementRef!: ElementRef<HTMLVideoElement>;
+  @ViewChild(IonContent, { read: ElementRef }) splashContent!: ElementRef;
 
-  constructor(private router: Router) {}
+  constructor(
+    private animationCtrl: AnimationController,
+    private navCtrl: NavController
+  ) {}
 
   ngAfterViewInit() {
     const video = this.videoElementRef.nativeElement;
-    // Attempt to play programmatically
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.error('Error attempting to play video:', error);
-        // Fallback: Auto-play after a user gesture
-        document.addEventListener('click', () => video.play(), { once: true });
-      });
-    }
+    video.play().catch(() => {
+      document.addEventListener('click', () => video.play(), { once: true });
+    });
   }
 
-  navigateToHome() {
-    this.router.navigateByUrl('/tabs/tab3', { replaceUrl: true });
+  async startTransition() {
+    const fadeOut = this.animationCtrl.create()
+      .addElement(this.splashContent.nativeElement)
+      .duration(800)
+      .fromTo('opacity', '1', '0')
+      .fromTo('z-index', '2', '1');
+
+    const navigationPromise = this.navCtrl.navigateRoot('/tabs/tab3', {
+      replaceUrl: true,
+      animated: true,
+      animation: (baseEl: any, opts: any) => {
+        const enterAnimation = this.animationCtrl.create()
+          .addElement(opts.enteringEl)
+          .duration(800)
+          .easing('ease-in')
+          .fromTo('opacity', '0', '1')
+          .fromTo('z-index', '1', '2');
+
+        const leaveAnimation = this.animationCtrl.create()
+          .addElement(opts.leavingEl)
+          .duration(800)
+          .fromTo('opacity', '1', '0')
+          .fromTo('z-index', '2', '1');
+
+        return this.animationCtrl.create()
+          .addAnimation([enterAnimation, leaveAnimation]);
+      }
+    });
+
+    await Promise.all([fadeOut.play(), navigationPromise]);
   }
 }

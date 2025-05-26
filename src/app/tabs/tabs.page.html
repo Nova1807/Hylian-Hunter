@@ -1,17 +1,23 @@
 <ion-tabs #tabs (ionTabsDidChange)="tabChanged($event)">
   <ion-tab-bar slot="bottom" [class]="'tab-bar-' + activeTab">
-    <!-- Linker Button - immer Home.png aus aktivem Tab-Ordner -->
-    <ion-tab-button tab="tab3" href="/tabs/tab3">
+    <ion-tab-button
+      tab="tab3"
+      href="/tabs/tab3"
+      (click)="handleTabClick($event, 'tab3')">
       <img [src]="getButtonImage('Home')" class="tab-icon" />
     </ion-tab-button>
 
-    <!-- Mittlerer Button - immer M.png aus aktivem Tab-Ordner -->
-    <ion-tab-button tab="Monster-Hunter" href="/tabs/Monster-Hunter">
+    <ion-tab-button
+      tab="Monster-Hunter"
+      href="/tabs/Monster-Hunter"
+      (click)="handleTabClick($event, 'Monster-Hunter')">
       <img [src]="getButtonImage('M')" class="tab-icon" />
     </ion-tab-button>
 
-    <!-- Rechter Button - immer Z.png aus aktivem Tab-Ordner -->
-    <ion-tab-button tab="LOZ" href="/tabs/LOZ">
+    <ion-tab-button
+      tab="LOZ"
+      href="/tabs/LOZ"
+      (click)="handleTabClick($event, 'LOZ')">
       <img [src]="getButtonImage('Z')" class="tab-icon" />
     </ion-tab-button>
   </ion-tab-bar>

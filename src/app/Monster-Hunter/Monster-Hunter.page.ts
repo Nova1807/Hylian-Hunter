@@ -98,7 +98,6 @@ export class MonsterHunterPage implements OnInit {
     );
   }
 
-  /** Initialisiert alle möglichen Filterwerte aus den geladenen Monstern */
   initFilterOptions() {
     const set = {
       species: new Set<string>(),
@@ -120,56 +119,42 @@ export class MonsterHunterPage implements OnInit {
     this.filterOptions.locations = Array.from(set.locations).sort();
     this.filterOptions.ailments  = Array.from(set.ailments).sort();
   }
+
   levenshteinDistance(a: string, b: string): number {
     const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
     for (let j = 0; j <= a.length; j++) {
       matrix[0][j] = j;
     }
-
     for (let i = 1; i <= b.length; i++) {
       for (let j = 1; j <= a.length; j++) {
         const cost = b[i - 1] === a[j - 1] ? 0 : 1;
         matrix[i][j] = Math.min(
-          matrix[i - 1][j] + 1,      // Deletion
-          matrix[i][j - 1] + 1,      // Insertion
-          matrix[i - 1][j - 1] + cost // Substitution
+          matrix[i - 1][j] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j - 1] + cost
         );
       }
     }
-
     return matrix[b.length][a.length];
   }
 
-  /** Wendet Suche + alle aktiven Filter an */
   applyFilters() {
     const term = this.searchTerm.trim().toLowerCase();
 
     let filtered = this.allMonsters.filter(monster => {
-      // Suche nach Name (genauer Treffer oder leerer Suchterm)
       const nameMatch = term === '' || monster.name.toLowerCase().startsWith(term);
-
-      // Filter: Typ
       const typeMatch = this.selectedFilters.type.length === 0 || this.selectedFilters.type.includes(monster.type);
-
-      // Filter: Spezies
       const speciesMatch = this.selectedFilters.species.length === 0 || this.selectedFilters.species.includes(monster.species);
-
-      // Filter: Elemente
       const elementsMatch = this.selectedFilters.elements.length === 0 ||
         (monster.elements && monster.elements.some((e: string) => this.selectedFilters.elements.includes(e)));
-
-      // Filter: Schwächen
       const weaknessesMatch = this.selectedFilters.weaknesses.length === 0 ||
         (monster.weaknesses && monster.weaknesses.some((w: any) => this.selectedFilters.weaknesses.includes(w.element)));
-
-      // Filter: Ailments
       const ailmentsMatch = this.selectedFilters.ailments.length === 0 ||
         (monster.ailments && monster.ailments.some((a: any) => this.selectedFilters.ailments.includes(a.name)));
 
       return nameMatch && typeMatch && speciesMatch && elementsMatch && weaknessesMatch && ailmentsMatch;
     });
 
-    // Fuzzy-Suche, wenn kein exakter Name-Treffer
     if (filtered.length === 0 && term.length >= 2) {
       filtered = this.allMonsters.filter(monster =>
         this.levenshteinDistance(monster.name.toLowerCase(), term) <= 2
@@ -185,7 +170,6 @@ export class MonsterHunterPage implements OnInit {
     }
   }
 
-  /** Reset aller Filter und Suche */
   resetFilters() {
     this.searchTerm = '';
     Object.keys(this.selectedFilters).forEach(key => {

@@ -1,4 +1,3 @@
-
 <ion-content class="monster-content">
   <app-header></app-header>
   <div class="header">
@@ -21,7 +20,6 @@
         <ng-template>
           <ion-content>
             <ion-list lines="full">
-
               <ion-list-header>
                 <ion-label>Filter Options</ion-label>
               </ion-list-header>
@@ -64,7 +62,6 @@
               <ion-item lines="none">
                 <ion-button expand="block" (click)="resetFilters()">Reset</ion-button>
               </ion-item>
-
             </ion-list>
           </ion-content>
         </ng-template>
@@ -72,7 +69,8 @@
     </div>
   </div>
 
-  <ng-container *ngIf="!isLoading && displayedMonsters.length > 0; else mainMonsterLoading">
+  <!-- 1) Einzelnes Monster oder Fallback -->
+  <ng-container *ngIf="!isLoading && displayedMonsters.length > 0; else resultTemplate">
     <div class="main-monster-card" (click)="navigateToDetail(displayedMonsters[0].id)">
       <img class="monster-badge"
            [src]="'assets/Monster-Images-Mini/' + displayedMonsters[0].name + '.png'"
@@ -91,8 +89,9 @@
     </div>
   </ng-container>
 
-  <ng-template #mainMonsterLoading>
-    <div class="main-monster-card skeleton-loading">
+  <!-- 2) Fallback-Template: Skeleton oder "Keine Ergebnisse" -->
+  <ng-template #resultTemplate>
+    <div *ngIf="isLoading" class="main-monster-card skeleton-loading">
       <ion-skeleton-text animated style="width: 60%; height: 24px;"></ion-skeleton-text>
       <ion-skeleton-text animated style="width: 80px; height: 80px; margin: 10px auto; border-radius: 50%;"></ion-skeleton-text>
       <ion-skeleton-text animated style="width: 100%; height: 200px; margin: 0 auto;"></ion-skeleton-text>
@@ -101,40 +100,45 @@
         <ion-skeleton-text animated style="width: 70%; height: 16px;"></ion-skeleton-text>
       </div>
     </div>
+    <div *ngIf="!isLoading && displayedMonsters.length === 0" class="no-results">
+      <p>No Monsters found under that name</p>
+    </div>
   </ng-template>
 
-  <div class="section-title">Alle Monster</div>
+  <!-- 3) Grid mit „Alle Monster“, nur wenn mehr als ein Ergebnis -->
+  <ng-container *ngIf="displayedMonsters.length > 1">
+    <div class="section-title">More Monsters</div>
+    <div class="similar-monsters-grid">
+      <div class="monster-tile"
+           *ngFor="let monster of displayedMonsters.slice(1)"
+           (click)="navigateToDetail(monster.id)">
+        <img class="monster-tile-image"
+             [src]="'assets/Monster-Images/' + monster.name + '.png'"
+             loading="lazy"
+             (load)="onImageLoad($event)"
+             (error)="onImageError($event, monster)">
+        <div class="monster-tile-name">{{ monster.name }}</div>
+        <img class="monster-tile-badge"
+             [src]="'assets/Monster-Images-Mini/' + monster.name + '.png'"
+             loading="lazy"
+             (load)="onImageLoad($event)"
+             (error)="onImageError($event, monster)">
+      </div>
 
-  <div class="similar-monsters-grid">
-    <div class="monster-tile"
-         *ngFor="let monster of displayedMonsters.slice(1)"
-         (click)="navigateToDetail(monster.id)">
-      <img class="monster-tile-image"
-           [src]="'assets/Monster-Images/' + monster.name + '.png'"
-           loading="lazy"
-           (load)="onImageLoad($event)"
-           (error)="onImageError($event, monster)">
-      <div class="monster-tile-name">{{ monster.name }}</div>
-      <img class="monster-tile-badge"
-           [src]="'assets/Monster-Images-Mini/' + monster.name + '.png'"
-           loading="lazy"
-           (load)="onImageLoad($event)"
-           (error)="onImageError($event, monster)">
+      <ng-container *ngIf="isLoading">
+        <div class="monster-tile skeleton-item" *ngFor="let item of skeletonItems">
+          <ion-skeleton-text animated style="width: 100%; height: 120px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 80%; height: 16px; margin-top: 8px;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%; height: 14px;"></ion-skeleton-text>
+        </div>
+      </ng-container>
     </div>
 
-    <ng-container *ngIf="isLoading">
-      <div class="monster-tile skeleton-item" *ngFor="let item of skeletonItems">
-        <ion-skeleton-text animated style="width: 100%; height: 120px;"></ion-skeleton-text>
-        <ion-skeleton-text animated style="width: 80%; height: 16px; margin-top: 8px;"></ion-skeleton-text>
-        <ion-skeleton-text animated style="width: 60%; height: 14px;"></ion-skeleton-text>
-      </div>
-    </ng-container>
-  </div>
-
-  <ion-infinite-scroll (ionInfinite)="loadMoreMonsters($event)" threshold="100px" *ngIf="!isLoading">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more monsters...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <ion-infinite-scroll (ionInfinite)="loadMoreMonsters($event)" threshold="100px" *ngIf="!isLoading">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more monsters...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
 </ion-content>
