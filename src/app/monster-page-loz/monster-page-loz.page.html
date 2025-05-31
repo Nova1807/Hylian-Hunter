@@ -8,16 +8,46 @@
 </ion-header>
 
 <ion-content class="iphone-13-mini-11 gradient-background">
-  <div class="search-container">
-    <ion-searchbar
-      [(ngModel)]="searchTerm"
-      (ionInput)="applyFilters()"
-      animated="true"
-      placeholder="Search"
-      show-clear-button="always"
-      mode="ios">
-    </ion-searchbar>
+  <div class="search-container" style="display: flex; justify-content: center; width: 100%;">
+    <div class="searchbar-with-filter-wrapper">
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="applyFilters()"
+        animated="true"
+        placeholder="Search"
+        show-clear-button="always"
+        mode="ios"
+        class="transparent-searchbar"
+      ></ion-searchbar>
 
+      <div class="filter-icon-wrapper" (click)="toggleFilter()" style="cursor: pointer;">
+        <img class="icon" src="assets/Monster_Hunter_Pages/filter.png" alt="Filter Icon" />
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Filter Bar -->
+  <div class="filter-bar" *ngIf="showFilters">
+    <div class="filters-row">
+      <label>
+        <span>Place:</span>
+        <select [(ngModel)]="selectedPlace" (change)="applyFilters()">
+          <option value="">All</option>
+          <option *ngFor="let place of availablePlaces" [value]="place">{{ place }}</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Drops:</span>
+        <select [(ngModel)]="selectedDrop" (change)="applyFilters()">
+          <option value="">All</option>
+          <option *ngFor="let drop of availableDrops" [value]="drop">{{ drop }}</option>
+        </select>
+      </label>
+    </div>
+
+    <ion-button expand="block" fill="clear" color="dark" (click)="resetFilters()">Reset Filters</ion-button>
   </div>
 
   <div *ngIf="loading" class="loading-spinner">

@@ -70,7 +70,7 @@ ion-searchbar::part(icon) {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: linear-gradient(135deg, #f4d384cc 0%, #e57a4ccc 100%);
+  background: linear-gradient(-160deg, #f4d384cc 0%, #e57a4ccc 100%);
   padding: 15px;
   border-radius: 14px;
   margin: 10px 20px;
@@ -88,7 +88,6 @@ ion-searchbar::part(icon) {
   margin-bottom: 16px;
   font-size: 14px;
   font-weight: bold;
-  color: #333;
 }
 
 .filter-bar select,
