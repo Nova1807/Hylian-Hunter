@@ -7,29 +7,34 @@
     </div>
 
     <div class="info-section">
-      <!-- Gemeinsame Felder -->
       <p><strong>Category:</strong> {{ entry.category }}</p>
       <p><strong>Description:</strong> {{ entry.description }}</p>
-      <p *ngIf="entry.common_locations">
+
+      <p *ngIf="entry.common_locations && entry.common_locations.length">
         <strong>Found in:</strong> {{ entry.common_locations.join(', ') }}
       </p>
 
-      <!-- Waffenspezifische Felder -->
-      <ng-container *ngIf="entry.category === 'Equipment'">
-        <p><strong>Attack:</strong> {{ entry.properties.attack }}</p>
-        <p><strong>Defense:</strong> {{ entry.properties.defense }}</p>
+      <ng-container *ngIf="entry.category === 'equipment'">
+        <p *ngIf="entry.properties?.attack !== undefined">
+          <strong>Attack:</strong> {{ entry.properties.attack }}
+        </p>
+        <p *ngIf="entry.properties?.defense !== undefined">
+          <strong>Defense:</strong> {{ entry.properties.defense }}
+        </p>
       </ng-container>
 
-      <!-- Monsterspezifische Felder -->
-      <ng-container *ngIf="entry.category === 'Monsters'">
-        <p *ngIf="entry.hp"><strong>HP:</strong> {{ entry.hp }}</p>
-        <p *ngIf="entry.attack"><strong>Attack:</strong> {{ entry.attack }}</p>
-        <p *ngIf="entry.defense"><strong>Defense:</strong> {{ entry.defense }}</p>
-        <p *ngIf="entry.drops?.length">
-          <strong>Drops:</strong> {{ entry.drops.join(', ') }}
+      <ng-container *ngIf="entry.category === 'monsters'">
+        <p *ngIf="entry.hp !== undefined">
+          <strong>HP:</strong> {{ entry.hp }}
         </p>
-        <p *ngIf="entry.locations?.length">
-          <strong>Locations:</strong> {{ entry.locations.join(', ') }}
+        <p *ngIf="entry.attack !== undefined">
+          <strong>Attack:</strong> {{ entry.attack }}
+        </p>
+        <p *ngIf="entry.defense !== undefined">
+          <strong>Defense:</strong> {{ entry.defense }}
+        </p>
+        <p *ngIf="entry.drops && entry.drops.length">
+          <strong>Drops:</strong> {{ entry.drops.join(', ') }}
         </p>
       </ng-container>
     </div>

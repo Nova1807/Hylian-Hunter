@@ -1,16 +1,16 @@
-/* Hintergrund Gradient für ion-content */
+/* ---------- Seite: Allgemeiner Hintergrund & Toolbar ---------- */
 ion-content {
   --background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%);
   min-height: 100%;
 }
 
-/* Toolbar Hintergrund Gradient */
 ion-toolbar {
   --background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%) !important;
   box-shadow: none !important;
 }
 
-/* Toolbar Text zentriert und weiß */
+
+
 .toolbar-title {
   color: white;
   font-weight: bold;
@@ -19,14 +19,13 @@ ion-toolbar {
   margin: 0;
 }
 
-/* Weißer Back Button Text */
 .white-back-button {
   --color: white;
 }
 
-/* Container mit Abständen und Breite für Suchleiste */
+/* ---------- Suchleiste ---------- */
 .search-container {
-  justify-content:center;
+  justify-content: center;
   width: 100%;
   margin-left: -10px;
   padding: 10px 20px;
@@ -36,34 +35,16 @@ ion-toolbar {
 .search {
   font-family: 'Archivo Black';
   font-size: 13px;
-  color:white;
+  color: white;
   letter-spacing: 0.05em;
 }
 
-.rectangle-div {
-  width: 40px;
-  height: 29px;
-  background: linear-gradient(180deg, #ec8e53, #f8b05f 50.5%, #e57a4c);
-  border-radius: 16px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  margin-right: 20px;
-  align-items: center;
-}
-
-.icon {
-  width: 23px;
-  height: 23px;
-  opacity: 0.7;
-}
-/* ion-searchbar Styling */
 ion-searchbar {
   --background: linear-gradient(90deg, #ffc567 24%, #e57a4c 82.5%);
   --color: #ffffff;
-  --placeholder-color: rgba(0, 0, 0, 0.5);
-  --icon-color: rgba(0, 0, 0, 0.5);
-  --clear-button-color: #000;
+  --placeholder-color: rgba(255, 255, 255, 0.7);
+  --icon-color: rgba(255, 255, 255, 0.7);
+  --clear-button-color: #fff;
   border-radius: 12px;
   padding: 8px 12px;
   margin-right: 15px;
@@ -73,6 +54,7 @@ ion-searchbar {
 }
 
 ion-searchbar::part(input) {
+  color: white;
   border-radius: 12px;
   padding-left: 40px;
 }
@@ -83,22 +65,86 @@ ion-searchbar::part(icon) {
   opacity: 0.6;
 }
 
-/* Weapon List Container */
-.weapon-list-container {
-  margin: 20px;
-  padding-bottom: 80px; /* Prevent bottom nav overlap */
+/* ---------- Filterbereich ---------- */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(135deg, #f4d384cc 0%, #e57a4ccc 100%);
+  padding: 15px;
+  border-radius: 14px;
+  margin: 10px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
-/* Weapon Grid mit 2 Spalten */
+.filter-bar:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.filter-bar label {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-bar select,
+.filter-bar input[type="range"] {
+  background: rgba(255, 255, 255, 0.15); /* halbtransparent, passend zum Background */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin-left:10px;
+  padding: 8px 12px;
+  font-family: 'Archivo Black';
+  font-size: 13px;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #e57a4c;
+  text-align: center;
+}
+
+ion-item {
+  --background: transparent;
+  color: white;
+  font-family: 'Archivo Black';
+}
+
+ion-label {
+  font-size: 13px;
+}
+
+ion-range {
+  --handle-size: 0; /* Standard ist etwa 28px, hier kleiner */
+  --handle-background: #f4a261; /* Beispiel: Orange-Ton, kannst du anpassen */
+  --bar-background-active: #e57a4c; /* aktive Strecke, Beispiel grün/türkis */
+  --bar-background: #ddd; /* inaktive Strecke, hellgrau */
+  --handle-box-shadow: none; /* Optional: Schatten entfernen */
+}
+/* ---------- Waffenliste ---------- */
+.weapon-list-container {
+  margin: 20px;
+  padding-bottom: 80px; /* Für Bottom Nav Abstand */
+}
+
 .weapon-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
-/* Weapon Item (Karte) hellgelb */
 .weapon-item {
-  background: linear-gradient(#e57a4c 0%,#FFC567 50%) ; /* Hellgelber Ton */
+  background: linear-gradient(#e57a4c 0%, #FFC567 50%);
   border-radius: 18px;
   color: black;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -109,7 +155,6 @@ ion-searchbar::part(icon) {
   align-items: center;
 }
 
-/* Weapon Content */
 .weapon-content {
   display: flex;
   flex-direction: column;
@@ -117,7 +162,6 @@ ion-searchbar::part(icon) {
   width: 100%;
 }
 
-/* Weapon Bild */
 .weapon-content img {
   width: 100%;
   height: auto;
@@ -128,7 +172,6 @@ ion-searchbar::part(icon) {
   align-self: center;
 }
 
-/* Rechteck unter dem Bild (Pfeil) */
 .rectangle-parent {
   align-self: flex-end;
   width: 45px;
@@ -143,14 +186,12 @@ ion-searchbar::part(icon) {
   align-items: center;
 }
 
-/* Pfeil Icon */
 .fi-rr-arrow-small-right-icon {
   height: 10px;
   width: 20px;
   margin: 9px;
 }
 
-/* Waffenname kleiner und angepasst */
 .weapon-name {
   font-size: 14px;
   line-height: 1.2;
@@ -159,17 +200,45 @@ ion-searchbar::part(icon) {
   text-align: center;
 }
 
-/* Responsive Tweaks */
+/* ---------- Icons & Hover ---------- */
+.rectangle-div {
+  width: 40px;
+  height: 29px;
+  background: linear-gradient(180deg, #ec8e53, #f8b05f 50.5%, #e57a4c);
+  border-radius: 16px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.rectangle-div:hover {
+  transform: scale(1.1);
+}
+
+.icon {
+  width: 23px;
+  height: 23px;
+  opacity: 0.7;
+}
+
+/* ---------- Responsive Anpassungen ---------- */
 @media (max-width: 400px) {
   .weapon-grid {
     gap: 10px;
   }
+
   .weapon-list-container {
     margin: 10px;
   }
+
   .search-container {
     margin: 10px 10px 5px 10px;
   }
+
   .custom-searchbar-wrapper {
     max-width: 100%;
   }

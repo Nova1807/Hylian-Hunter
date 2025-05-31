@@ -20,12 +20,43 @@
         show-clear-button="always"
         mode="ios"
         class="transparent-searchbar">
-        <div class="rectangle-div">
+        <div class="rectangle-div" (click)="toggleFilter()">
           <img class="icon" src="assets/Monster_Hunter_Pages/filter.png" />
         </div>
       </ion-searchbar>
     </div>
   </div>
+
+  <!-- Filter UI -->
+  <!-- Filterbereich -->
+  <div class="filter-bar" *ngIf="showFilters">
+    <div class="filter-title">Filter</div>
+
+    <!-- Ort auswählen -->
+    <label>
+      <span>Place:</span>
+      <select [(ngModel)]="selectedPlace" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let place of availablePlaces" [value]="place">{{ place }}</option>
+      </select>
+    </label>
+
+    <!-- Angriff (Slider) -->
+    <label>
+      <span>Min. Attack: {{ minAttack ?? 0 }}</span>
+      <ion-range [(ngModel)]="minAttack" min="0" max="100" pin="true" (ionChange)="applyFilters()"></ion-range>
+    </label>
+
+    <!-- Verteidigung (Slider) -->
+    <label>
+      <span>Min. Defense: {{ minDefense ?? 0 }}</span>
+      <ion-range [(ngModel)]="minDefense" min="0" max="100" pin="true" (ionChange)="applyFilters()"></ion-range>
+    </label>
+
+    <!-- Zurücksetzen -->
+    <ion-button expand="block" fill="clear" color="dark" (click)="resetFilters()">Reset Filters</ion-button>
+  </div>
+
 
   <!-- Weapon List -->
   <div class="weapon-list-container">
