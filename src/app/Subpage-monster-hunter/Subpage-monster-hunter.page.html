@@ -3,16 +3,10 @@
     <!-- Back Button -->
     <div class="back-button-wrapper">
       <ion-buttons slot="start">
-        <ng-container *ngIf="currentView === 'monster'; else weaponBackButton">
-          <ion-back-button class="custom-back-button" defaultHref="/">
-            <img src="assets/Subpage-Monster-Hunter/Arrow.png" class="arrow-icon" alt="Back">
-          </ion-back-button>
-        </ng-container>
-        <ng-template #weaponBackButton>
-          <ion-button class="custom-back-button" (click)="goBackToMonster()">
-            <img src="assets/Subpage-Monster-Hunter/Arrow.png" class="arrow-icon" alt="Back">
-          </ion-button>
-        </ng-template>
+        <!-- Klickt man hierauf, geht es eine Ansicht zurück -->
+        <ion-button class="custom-back-button" (click)="goBack()">
+          <img src="assets/Subpage-Monster-Hunter/Arrow.png" class="arrow-icon" alt="Back">
+        </ion-button>
       </ion-buttons>
     </div>
 
@@ -79,9 +73,37 @@
         </div>
 
         <h3 class="subsection-title weapons-title">Best weapons to use:</h3>
+
+        <!-- Popover-Trigger -->
+        <div class="weapon-filter-section">
+          <ion-button class="filter-button" id="weapon-filter-button">
+            <img src="assets/Monster_Hunter_Pages/filter.png" class="filter-icon" alt="Filter">
+          </ion-button>
+
+          <ion-popover trigger="weapon-filter-button" [dismissOnSelect]="false">
+            <ng-template>
+              <ion-content>
+                <ion-list lines="full">
+                  <!-- Hier nur die Waffen-Typen in einer ion-select, ohne extra Label -->
+                  <ion-item>
+                    <ion-select [(ngModel)]="selectedWeaponType" (ionChange)="handleSelectChange()">
+                      <!-- „All Types“-Option -->
+                      <ion-select-option value="">All Types</ion-select-option>
+                      <!-- Für jeden weaponTypes-Eintrag -->
+                      <ion-select-option *ngFor="let type of weaponTypes" [value]="type">
+                        {{ type }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </div>
+
         <div *ngIf="!isWeaponsLoading; else weaponsLoading">
           <div class="weapons-grid">
-            <div class="weapon-card" *ngFor="let weapon of bestWeapons" (click)="showWeapon(weapon)">
+            <div class="weapon-card" *ngFor="let weapon of filteredBestWeapons" (click)="showWeapon(weapon)">
               <div class="weapon-bg-glow"></div>
               <img [src]="weapon.assets?.image || 'assets/placeholder-weapon.png'"
                    class="weapon-image"
@@ -91,8 +113,9 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
-    </div>
+
     <!-- Weapon View -->
     <div *ngIf="currentView === 'weapon' && selectedWeapon" class="weapon-view">
       <img [src]="selectedWeapon.assets?.image || 'assets/placeholder-weapon.png'"
@@ -166,11 +189,9 @@
             </div>
           </ng-template>
         </div>
-
       </div>
     </div>
   </div>
-
 
   <ng-template #loading>
     <div class="loading-container">

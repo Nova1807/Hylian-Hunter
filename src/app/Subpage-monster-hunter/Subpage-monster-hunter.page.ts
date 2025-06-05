@@ -1,12 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  IonHeader, IonToolbar, IonTitle, IonContent,
-  IonButtons, IonBackButton, IonCard, IonCardContent,
-  IonSkeletonText, IonButton, IonIcon
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonPopover,
+  IonList,
+  IonListHeader,
+  IonSelect,
+  IonSelectOption,
+  IonCard,
+  IonCardContent,
+  IonSkeletonText
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MonsterHunterApiService } from "../Monster-Hunter.api/Monster-Hunter.api.service";
+import { MonsterHunterApiService } from '../Monster-Hunter.api/Monster-Hunter.api.service';
 import { Location } from '@angular/common';
 
 interface Crafting {
@@ -62,21 +77,64 @@ interface Weapon {
 
 const MONSTER_ORDER: string[] = [
   // Kleintiere
-  'Aptonoth', 'Jagras', 'Mernos', 'Mosswine', 'Kelbi', 'Noios', 'Gajau',
-  'Raphinos', 'Apceros', 'Kestodon', 'Shamos', 'Hornetaur', 'Gastodon', 'Barnos',
+  'Aptonoth',
+  'Jagras',
+  'Mernos',
+  'Mosswine',
+  'Kelbi',
+  'Noios',
+  'Gajau',
+  'Raphinos',
+  'Apceros',
+  'Kestodon',
+  'Shamos',
+  'Hornetaur',
+  'Gastodon',
+  'Barnos',
 
   // Niedriges Rang Monster
-  'Great Jagras', 'Kulu-Ya-Ku', 'Pukei-Pukei', 'Barroth', 'Jyuratodus',
-  'Tobi-Kadachi', 'Tzitzi-Ya-Ku', 'Anjanath', 'Radobaan', 'Paolumu', 'Great Girros',
+  'Great Jagras',
+  'Kulu-Ya-Ku',
+  'Pukei-Pukei',
+  'Barroth',
+  'Jyuratodus',
+  'Tobi-Kadachi',
+  'Tzitzi-Ya-Ku',
+  'Anjanath',
+  'Radobaan',
+  'Paolumu',
+  'Great Girros',
 
   // Mittleres Rang Monster
-  'Legiana', 'Odogaron', 'Pink Rathian', 'Rathalos', 'Diablos', 'Black Diablos',
+  'Legiana',
+  'Odogaron',
+  'Pink Rathian',
+  'Rathalos',
+  'Diablos',
+  'Black Diablos',
 
   // Hohes Rang Monster
-  'Deviljho', 'Lunastra', 'Teostra', 'Kushala Daora', 'Vaal Hazak', 'Nergigante',
-  'Zorah Magdaros', 'Azure Rathian', 'Bazelgeuse', 'Xeno`jiiva', 'Kirin',
-  'Kulve Taroth', 'Behemoth', 'Leshen', 'Ancient Leshen', 'Safi`jiiva',
-  'Rajang', 'Viper Tobi-Kadachi', 'Namielle', 'Zinogre', 'Stygian Zinogre'
+  'Deviljho',
+  'Lunastra',
+  'Teostra',
+  'Kushala Daora',
+  'Vaal Hazak',
+  'Nergigante',
+  'Zorah Magdaros',
+  'Azure Rathian',
+  'Bazelgeuse',
+  'Xeno`jiiva',
+  'Kirin',
+  'Kulve Taroth',
+  'Behemoth',
+  'Leshen',
+  'Ancient Leshen',
+  'Safi`jiiva',
+  'Rajang',
+  'Viper Tobi-Kadachi',
+  'Namielle',
+  'Zinogre',
+  'Stygian Zinogre'
 ];
 
 @Component({
@@ -86,21 +144,46 @@ const MONSTER_ORDER: string[] = [
   standalone: true,
   imports: [
     CommonModule,
-    IonHeader, IonToolbar, IonTitle, IonContent,
-    IonButtons, IonBackButton, IonCard, IonCardContent,
-    IonSkeletonText, IonButton, IonIcon
-  ],
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonPopover,
+    IonList,
+    IonListHeader,
+    IonSelect,
+    IonSelectOption,
+    IonCard,
+    IonCardContent,
+    IonSkeletonText
+  ]
 })
 export class SubpageMonsterHunterPage implements OnInit {
+  @ViewChild(IonPopover) weaponPopover!: IonPopover;
+
   monster: any;
   isLoading = true;
   isWeaponsLoading = true;
   bestWeapons: Weapon[] = [];
+  filteredBestWeapons: Weapon[] = [];
   allWeapons: Weapon[] = [];
   currentView: 'monster' | 'weapon' = 'monster';
   selectedWeapon: Weapon | null = null;
   upgradedWeapons: Weapon[] = [];
   isUpgradesLoading = false;
+
+  // Properties für Waffentyp-Filter
+  weaponTypes: string[] = [];
+  selectedWeaponType: string = '';
+
+  // Für spätere Filter-Logik zwischengespeichert
+  private weaknessMap: Map<string, number> = new Map();
 
   constructor(
     private location: Location,
@@ -109,7 +192,7 @@ export class SubpageMonsterHunterPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const id = params['id'];
       if (id) {
         this.loadMonster(+id);
@@ -122,7 +205,7 @@ export class SubpageMonsterHunterPage implements OnInit {
     });
   }
 
-  loadMonster(id: number) {
+  private loadMonster(id: number) {
     this.isLoading = true;
     this.monsterApiService.getMonsterById(id).subscribe({
       next: (monster) => {
@@ -138,11 +221,12 @@ export class SubpageMonsterHunterPage implements OnInit {
     });
   }
 
-  loadWeapons() {
+  private loadWeapons() {
     this.isWeaponsLoading = true;
     this.monsterApiService.getAllWeapons().subscribe({
       next: (weapons) => {
         this.allWeapons = weapons;
+        this.weaponTypes = [...new Set(weapons.map((w) => w.type))].sort();
         this.calculateBestWeapons(weapons);
         this.isWeaponsLoading = false;
       },
@@ -152,49 +236,121 @@ export class SubpageMonsterHunterPage implements OnInit {
     });
   }
 
+  /**
+   * Legt das initiale Set an „best weapons“ fest und speichert Schwächen-Map.
+   */
   private calculateBestWeapons(weapons: Weapon[]) {
-    const weaknessMap = new Map<string, number>(
+    // 1) Schwächen-Map erstellen
+    this.weaknessMap = new Map<string, number>(
       this.monster.weaknesses.map((w: any) => [w.element, w.stars])
     );
+
+    // 2) Welche Monster sind „verfügbar“ (im MONSTER_ORDER vor dem aktuellen Monster)
     const monsterIndex = MONSTER_ORDER.indexOf(this.monster.name);
     const availableMonsters = new Set(MONSTER_ORDER.slice(0, monsterIndex));
-    const allWeaponTypes = [...new Set(weapons.map(w => w.type))];
 
-    const weaponsWithMaterials = weapons.filter(weapon =>
+    // 3) Alle craftbaren Waffen (rekursiv prüfen)
+    const weaponsWithMaterials = weapons.filter((weapon) =>
       this.isCraftableWithAvailableMaterials(weapon, availableMonsters)
     );
 
-    const ironWeapons = weapons.filter(weapon =>
-      this.isIronWeapon(weapon) &&
-      !weapon.crafting.previous &&
-      weapon.crafting.craftable
+    // 4) Iron-Weapon-Fallback (falls keine craftbare Variante von diesem Typ vorhanden ist)
+    const ironWeapons = weapons.filter(
+      (weapon) =>
+        this.isIronWeapon(weapon) &&
+        !weapon.crafting.previous &&
+        weapon.crafting.craftable
     );
 
+    // 5) Sicherstellen, dass von jedem Waffentyp mindestens eine Waffe da ist
+    const allWeaponTypes = [...new Set(weapons.map((w) => w.type))];
     const candidateWeapons = this.ensureWeaponTypeCoverage(
       weaponsWithMaterials,
       ironWeapons,
       allWeaponTypes
     );
 
+    // 6) Score berechnen, sortieren, Top 6 zurückgeben
     this.bestWeapons = this.scoreAndSortWeapons(
       candidateWeapons,
-      weaknessMap
+      this.weaknessMap
     ).slice(0, 6);
+
+    // Initial: gefilterte Liste == alle Top 6
+    this.filteredBestWeapons = [...this.bestWeapons];
+    this.selectedWeaponType = '';
   }
 
-  private isCraftableWithAvailableMaterials(weapon: Weapon, availableMonsters: Set<string>): boolean {
+  /**
+   * Wird aufgerufen, sobald eine Auswahl im Popover getroffen wurde.
+   * Setzt `selectedWeaponType`, führt `filterWeapons()` aus und schließt das Popover.
+   */
+  handleSelectChange() {
+    this.filterWeapons();
+    this.weaponPopover.dismiss();
+  }
+
+  /**
+   * Filtern nach ausgewähltem weaponType:
+   * - Wenn `selectedWeaponType === ''`, dann Rückgabe der ursprünglichen Top 6
+   * - Sonst: craftbare Waffen dieses Typs ermitteln (mit Fallback auf Iron-Weapon),
+   *   Score berechnen und Top 6 nehmen.
+   */
+  filterWeapons() {
+    if (!this.selectedWeaponType) {
+      this.filteredBestWeapons = [...this.bestWeapons];
+      return;
+    }
+
+    const weaknessMap = this.weaknessMap;
+    const monsterIndex = MONSTER_ORDER.indexOf(this.monster.name);
+    const availableMonsters = new Set<string>(
+      MONSTER_ORDER.slice(0, monsterIndex)
+    );
+
+    // zuerst alle craftbaren Waffen dieses Typs
+    const weaponsOfTypeAndCraftable = this.allWeapons.filter((weapon) => {
+      if (weapon.type !== this.selectedWeaponType) return false;
+      return this.isCraftableWithAvailableMaterials(
+        weapon,
+        availableMonsters
+      );
+    });
+
+    // Iron-Weapon-Fallback dieses Typs
+    const ironWeaponsOfType = this.allWeapons.filter(
+      (weapon) =>
+        weapon.type === this.selectedWeaponType &&
+        this.isIronWeapon(weapon) &&
+        !weapon.crafting.previous &&
+        weapon.crafting.craftable
+    );
+
+    const candidates =
+      weaponsOfTypeAndCraftable.length > 0
+        ? weaponsOfTypeAndCraftable
+        : ironWeaponsOfType;
+
+    const scoredSorted = this.scoreAndSortWeapons(candidates, weaknessMap);
+    this.filteredBestWeapons = scoredSorted.slice(0, 6);
+  }
+
+  private isCraftableWithAvailableMaterials(
+    weapon: Weapon,
+    availableMonsters: Set<string>
+  ): boolean {
     if (!weapon.crafting?.craftable) return false;
 
     let currentWeapon: Weapon | undefined = weapon;
     while (currentWeapon) {
       const materials = this.getMaterials(currentWeapon);
-      const canCraft = materials.every(m =>
+      const canCraft = materials.every((m) =>
         this.isMaterialAllowed(m.item.name, availableMonsters)
       );
-
       if (!canCraft) return false;
-      currentWeapon = currentWeapon.crafting.previous ?
-        this.getWeaponById(currentWeapon.crafting.previous) : undefined;
+      currentWeapon = currentWeapon.crafting.previous
+        ? this.getWeaponById(currentWeapon.crafting.previous)
+        : undefined;
     }
     return true;
   }
@@ -205,50 +361,52 @@ export class SubpageMonsterHunterPage implements OnInit {
     allTypes: string[]
   ): Weapon[] {
     const result = [...mainWeapons];
-    const coveredTypes = new Set(mainWeapons.map(w => w.type));
-
-    allTypes.forEach(type => {
+    const coveredTypes = new Set(mainWeapons.map((w) => w.type));
+    allTypes.forEach((type) => {
       if (!coveredTypes.has(type)) {
-        const fallback = fallbackWeapons.find(w => w.type === type);
+        const fallback = fallbackWeapons.find((w) => w.type === type);
         if (fallback) result.push(fallback);
       }
     });
-
     return result;
   }
 
-  private scoreAndSortWeapons(weapons: Weapon[], weaknessMap: Map<string, number>): Weapon[] {
-    const topWeakness = [...weaknessMap.entries()]
-      .sort((a, b) => b[1] - a[1])[0] || ['', 0];
+  private scoreAndSortWeapons(
+    weapons: Weapon[],
+    weaknessMap: Map<string, number>
+  ): Weapon[] {
+    const topWeakness =
+      [...weaknessMap.entries()].sort((a, b) => b[1] - a[1])[0] || ['', 0];
 
-    return weapons.map(weapon => {
-      const elementMatch = (weapon.elements || []).find(
-        el => el.type === topWeakness[0]
-      );
-
-      const elementBonus = elementMatch ?
-        elementMatch.damage * (topWeakness[1] + 1) * 1000 : 0;
-
-      return {
-        ...weapon,
-        displayName: this.formatWeaponName(weapon.name),
-        score: (weapon.attack?.raw || 0) + elementBonus
-      };
-    }).sort((a, b) => b.score - a.score);
+    return weapons
+      .map((weapon) => {
+        const elementMatch = (weapon.elements || []).find(
+          (el) => el.type === topWeakness[0]
+        );
+        const elementBonus = elementMatch
+          ? elementMatch.damage * (topWeakness[1] + 1) * 1000
+          : 0;
+        return {
+          ...weapon,
+          displayName: this.formatWeaponName(weapon.name),
+          score: (weapon.attack?.raw || 0) + elementBonus
+        };
+      })
+      .sort((a, b) => (b.score || 0) - (a.score || 0));
   }
 
   private isIronWeapon(weapon: Weapon): boolean {
-    return /iron/i.test(weapon.name) &&
-      !/dragonbone|bone/i.test(weapon.name);
+    return /iron/i.test(weapon.name) && !/dragonbone|bone/i.test(weapon.name);
   }
 
-  private isMaterialAllowed(materialName: string, availableMonsters: Set<string>): boolean {
+  private isMaterialAllowed(
+    materialName: string,
+    availableMonsters: Set<string>
+  ): boolean {
     materialName = materialName.toLowerCase();
-
-    const matchingMonster = MONSTER_ORDER.find(monster =>
+    const matchingMonster = MONSTER_ORDER.find((monster) =>
       materialName.includes(monster.toLowerCase())
     );
-
     if (!matchingMonster) return true;
     return availableMonsters.has(matchingMonster);
   }
@@ -261,9 +419,11 @@ export class SubpageMonsterHunterPage implements OnInit {
 
   private hasValidImage(weapon: Weapon): boolean {
     const broken = ['gae bolg', 'specific-broken-weapon-id'];
-    return !!weapon.assets?.image &&
+    return (
+      !!weapon.assets?.image &&
       !broken.includes(weapon.name.toLowerCase()) &&
-      !broken.includes(weapon.id.toString());
+      !broken.includes(weapon.id.toString())
+    );
   }
 
   showWeapon(weapon: Weapon) {
@@ -275,7 +435,11 @@ export class SubpageMonsterHunterPage implements OnInit {
         };
         this.loadUpgradedWeapons(fullWeapon.crafting?.branches || []);
         this.currentView = 'weapon';
-        history.pushState({ view: 'weapon', weaponId: fullWeapon.id }, '', this.location.path());
+        history.pushState(
+          { view: 'weapon', weaponId: fullWeapon.id },
+          '',
+          this.location.path()
+        );
       },
       error: () => {
         this.selectedWeapon = weapon;
@@ -303,12 +467,11 @@ export class SubpageMonsterHunterPage implements OnInit {
     });
   }
 
-  goBackToMonster() {
-    if (history.state?.view === 'weapon') history.back();
-    else {
-      this.currentView = 'monster';
-      this.selectedWeapon = null;
-    }
+  /**
+   * Klick auf den Back-Button: geht eine Ansicht zurück (history.back()).
+   */
+  goBack() {
+    this.location.back();
   }
 
   private processMonsterData() {
@@ -325,9 +488,10 @@ export class SubpageMonsterHunterPage implements OnInit {
 
   getWeaponImagePath(weapon: Weapon): string {
     if (!weapon?.name) return 'assets/placeholder-weapon.png';
-    const type = weapon.type === 'great-sword' || weapon.type === 'long-sword'
-      ? 'Swords-1-2'
-      : weapon.type;
+    const type =
+      weapon.type === 'great-sword' || weapon.type === 'long-sword'
+        ? 'Swords-1-2'
+        : weapon.type;
     return `assets/Weapon/${type}/${weapon.name}.png`;
   }
 
@@ -348,7 +512,7 @@ export class SubpageMonsterHunterPage implements OnInit {
 
   handleWeaponImageError(event: Event, weapon: Weapon) {
     const img = event.target as HTMLImageElement;
-    this.bestWeapons = this.bestWeapons.filter(w => w.id !== weapon.id);
+    this.bestWeapons = this.bestWeapons.filter((w) => w.id !== weapon.id);
     img.src = 'assets/placeholder-weapon.png';
     img.style.opacity = '1';
   }
@@ -360,9 +524,15 @@ export class SubpageMonsterHunterPage implements OnInit {
   getDropsByType(type: string): DropDisplay[] {
     if (!this.hasDropData()) return [];
     return this.monster.rewards
-      .filter((r: MonsterReward) => r.conditions.some((c: Condition) => c.type.toLowerCase() === type.toLowerCase()))
+      .filter((r: MonsterReward) =>
+        r.conditions.some(
+          (c: Condition) => c.type.toLowerCase() === type.toLowerCase()
+        )
+      )
       .map((r: MonsterReward) => {
-        const c = r.conditions.find((cond: Condition) => cond.type.toLowerCase() === type.toLowerCase());
+        const c = r.conditions.find(
+          (cond: Condition) => cond.type.toLowerCase() === type.toLowerCase()
+        );
         return {
           item: r.item,
           chance: c?.chance || 0,
@@ -372,6 +542,6 @@ export class SubpageMonsterHunterPage implements OnInit {
   }
 
   private getWeaponById(id: number): Weapon | undefined {
-    return this.allWeapons.find(w => w.id === id);
+    return this.allWeapons.find((w) => w.id === id);
   }
 }

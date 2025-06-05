@@ -20,23 +20,13 @@ import { Router } from '@angular/router';
 export class MonsterHunterAnimationPage implements AfterViewInit {
   @ViewChild('animationPlayer') videoRef!: ElementRef<HTMLVideoElement>;
   currentAnimation = '';
-  private readonly playedFlagKey = 'mhAnimationPlayed';
 
   constructor(
     private router: Router,
     private navCtrl: NavController,
     private animationCtrl: AnimationController
   ) {
-    // Statt localStorage jetzt sessionStorage verwenden:
-    if (sessionStorage.getItem(this.playedFlagKey) === 'true') {
-      this.navCtrl.navigateRoot('/tabs/Monster-Hunter', { animated: false });
-      return;
-    }
-
-    // Flag für diese Session setzen
-    sessionStorage.setItem(this.playedFlagKey, 'true');
-
-    // Wie gehabt: Animation-Quelle basierend auf Origin auswählen
+    // IMMER die Animation basierend auf dem "origin" laden
     const nav = this.router.getCurrentNavigation();
     const origin = nav?.extras?.state?.['origin'];
 
@@ -45,6 +35,7 @@ export class MonsterHunterAnimationPage implements AfterViewInit {
     } else if (origin === 'tab3') {
       this.currentAnimation = 'assets/animations/Home-Monster-Hunter.mp4';
     } else {
+      // Falls kein origin, trotzdem navigieren
       this.navCtrl.navigateRoot('/tabs/Monster-Hunter', { animated: false });
     }
   }
@@ -52,7 +43,7 @@ export class MonsterHunterAnimationPage implements AfterViewInit {
   async ngAfterViewInit() {
     try {
       const video = this.videoRef.nativeElement;
-      await video.play();
+      await video.play(); // IMMER abspielen
     } catch (err) {
       console.error('Video playback failed:', err);
       this.navigateToTarget();

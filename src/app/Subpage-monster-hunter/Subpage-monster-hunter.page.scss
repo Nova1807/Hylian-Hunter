@@ -17,26 +17,26 @@ ion-content.main-content {
     z-index: -1;
   }
 
-  // Improved text contrast
   .description, .detail-item, .weakness-item {
     color: rgba(255, 255, 255, 0.9);
   }
 }
 
-// Updated back button with image
+/* ================================== */
+/* Back-Button (ursprünglich)         */
+/* ================================== */
 .back-button {
   --color: #eee;
   --background: linear-gradient(180deg, #201515, rgba(32, 21, 21, 0));
   --border-radius: 7.64px;
-  width: 48px;  // Larger touch target
+  width: 48px;  /* Größerer Touch-Bereich */
   height: 48px;
   box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
   margin-left: 16px;
-  margin-top: 10px; // Additional positioning
+  margin-top: 10px; /* Zusätzliche Positionierung */
 
-  // Custom arrow image styling
   ion-icon {
-    display: none; // Hide default icon
+    display: none; /* Standard-Icon ausblenden */
   }
 
   &::after {
@@ -69,7 +69,7 @@ ion-content.main-content {
   letter-spacing: 0.05em;
   margin: 30px 19px 20px;
   color: #eee;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); // Better contrast
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .info-section {
@@ -79,7 +79,7 @@ ion-content.main-content {
   position: relative;
   z-index: 2;
   box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-  border: 1px solid #382828; // Added border for depth
+  border: 1px solid #382828; /* Für mehr Tiefe */
 }
 
 .description-container {
@@ -87,7 +87,7 @@ ion-content.main-content {
 
   .description {
     font-size: 14px;
-    line-height: 1.6; // Improved readability
+    line-height: 1.6;
     margin-bottom: 16px;
   }
 }
@@ -95,12 +95,12 @@ ion-content.main-content {
 .detail-item {
   font-size: 14px;
   margin: 8px 0;
-  color: #ffecd1; // Warm text color
+  color: #ffecd1; /* Warmer Textton */
 }
 
 .subsection-title {
   font-size: 17px;
-  color: #ffd8a8 !important; // Added !important to ensure it overrides
+  color: #ffd8a8 !important; /* Stellen sicher, dass es überschreibt */
   margin-bottom: 12px;
 }
 
@@ -115,7 +115,7 @@ ion-content.main-content {
 
   .weakness-item {
     font-size: 14px;
-    margin-bottom: 8px; // Increased spacing
+    margin-bottom: 8px; /* Mehr Abstand */
     position: relative;
     padding-left: 8px;
 
@@ -123,7 +123,7 @@ ion-content.main-content {
       content: '•';
       position: absolute;
       left: -14px;
-      color: #ffd8a8; // Matching title color
+      color: #ffd8a8; /* Passend zum Titel */
       font-size: 18px;
     }
   }
@@ -131,15 +131,17 @@ ion-content.main-content {
 
 .weapons-title {
   font-size: 17px;
-  color: #ffd8a8; // Consistent accent color
+  color: #ffd8a8; /* Konsistente Akzentfarbe */
   margin: 32px 0 16px 19px;
 }
 
-/* 1. FIRST ADD THIS NEW WRAPPER (won't affect your image) */
+/* ================================== */
+/* Wrapper für den Back-Button        */
+/* ================================== */
 .back-button-wrapper {
   position: absolute;
-  top: 20px; // Match your existing margin (24px -> 20px)
-  left: 16px; // Match your existing margin
+  top: 20px; /* Wie dein ursprünglicher Abstand */
+  left: 16px;
   z-index: 100;
 
   ion-buttons {
@@ -148,9 +150,10 @@ ion-content.main-content {
   }
 }
 
+/* Fix: Back-Button bleibt sichtbar */
 .back-button-wrapper {
   position: fixed;
-  top: 60px; /* MOVED DOWN (was 20px) */
+  top: 60px; /* Etwas weiter nach unten verschoben */
   left: 16px;
   z-index: 100;
   will-change: transform;
@@ -162,14 +165,12 @@ ion-content.main-content {
 }
 
 .custom-back-button {
-  /* INCREASED SIZE (was 48px) */
+  /* Etwas größerer Touch-Bereich */
   width: 64px;
   height: 64px;
 
-  /* SCALE UP BACKGROUND IMAGE */
-  background: url('/assets/Subpage-Monster-Hunter/Arrow.png') center/32px 32px no-repeat; /* was 24px */
-
-  /* Keep all your existing styles below */
+  /* Skaliertes Pfeilbild */
+  background: url('/assets/Subpage-Monster-Hunter/Arrow.png') center/32px 32px no-repeat;
   --border-radius: 10px;
   margin: 0;
 
@@ -178,25 +179,57 @@ ion-content.main-content {
   }
 
   &::part(native) {
-    /* MATCH THE LARGER SIZE */
     background: url('/assets/Subpage-Monster-Hunter/Arrow.png') center/32px 32px no-repeat;
     width: 100%;
     height: 100%;
   }
 
-  /* Update these to match new size */
+  /* Passende Dimensionen */
   --width: 64px !important;
   --height: 64px !important;
   min-width: 64px !important;
 
-  /* Keep existing padding resets */
+  /* Padding entfernen */
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
 }
 
-/* Add these styles to your existing SCSS */
+/* ================================== */
+/* Filter-Button (Icon)               */
+/* ================================== */
+.weapon-filter-section {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 16px 16px;
+}
+
+.filter-button {
+  --background: #68514c;
+  --border-radius: 12px;
+  --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  .filter-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    opacity: 0.8;
+  }
+}
+
+/* ================================== */
+/* Restliches Styling (Grid, Cards,   */
+/* Drops, etc.) unverändert           */
+/* ================================== */
 .weapons-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -239,19 +272,6 @@ ion-content.main-content {
   z-index: 2;
 }
 
-.main-image {
-  width: 100%; // Take full width of container
-  max-width: 450px; // Set maximum size (adjust as needed)
-  height: auto; // Let height adjust automatically
-  max-height: 400px; // Set maximum height
-  object-fit: contain;
-  border-radius: 18px;
-  margin: 60px auto 20px; // Reduced top margin to accommodate larger image
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
 .star-icon {
   position: absolute;
   top: 12px;
@@ -261,7 +281,20 @@ ion-content.main-content {
   color: gold;
   font-size: 24px;
   z-index: 3;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+.main-image {
+  width: 100%; /* Ganze Breite nutzen */
+  max-width: 450px; /* Maximalgröße */
+  height: auto; /* Höhe automatisch anpassen */
+  max-height: 400px; /* Maximalhöhe */
+  object-fit: contain;
+  border-radius: 18px;
+  margin: 60px auto 20px; /* Zentriert mit oben/unten Abstand */
+  display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .weapon-name {
@@ -279,13 +312,12 @@ ion-content.main-content {
   margin: 0;
 }
 
-/* Additional style for weapon view */
 .weapon-view {
   .subsection-title {
-    color: #ffd8a8 !important; // Ensure it's visible in weapon view too
+    color: #ffd8a8 !important; /* Auch in Weapon-View sichtbar */
   }
 }
-/* Add this new section to your existing SCSS */
+
 .drops-section {
   margin-top: 24px;
 
@@ -305,7 +337,7 @@ ion-content.main-content {
   }
 
   .drop-type {
-    color: #ffd8a8; /* Gold-like color to match your theme */
+    color: #ffd8a8; /* Goldfarbener Akzent */
     font-size: 15px;
     margin-bottom: 8px;
     border-bottom: 1px solid #4a3a38;
@@ -324,7 +356,7 @@ ion-content.main-content {
     align-items: center;
     padding: 8px 0;
     border-bottom: 1px dashed #4a3a38;
-    color: white; /* Ensures text is white */
+    color: white; /* Weißer Text */
 
     &:last-child {
       border-bottom: none;
@@ -333,8 +365,8 @@ ion-content.main-content {
 
   .drop-name {
     flex-grow: 1;
-    color: white; /* Explicit white color */
-    margin-right: 16px; /* Adds space between name and percentage */
+    color: white; /* Weißer Text */
+    margin-right: 16px; /* Abstand zwischen Name und % */
   }
 
   .drop-condition {
@@ -352,7 +384,7 @@ ion-content.main-content {
     color: white;
     min-width: 50px;
     text-align: center;
-    margin-left: 8px; /* Adds space between condition and percentage */
+    margin-left: 8px; /* Abstand zwischen Bedingung und % */
   }
 }
 
