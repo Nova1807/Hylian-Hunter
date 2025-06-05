@@ -3,23 +3,24 @@ ion-content {
   color: #333;
   font-family: Arial, sans-serif;
   padding: 0;
-}
-
-/* Ganze Seite auf volle Höhe bringen */
-.weapon-detail-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
 }
 
-/* Oberer Abschnitt (Bild, Titel, Button) */
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 100%;
+}
+
 .header-section {
   text-align: center;
   padding: 20px;
   position: relative;
 }
 
-/* Zurück-Button */
 .back-button {
   position: absolute;
   top: 15px;
@@ -33,7 +34,6 @@ ion-content {
   z-index: 10;
 }
 
-/* Titel */
 .header-section h1 {
   margin-top: 40px;
   margin-bottom: 20px;
@@ -42,7 +42,6 @@ ion-content {
   color: white;
 }
 
-/* Bild */
 .detail-image {
   width: 100%;
   max-width: 400px;
@@ -51,7 +50,6 @@ ion-content {
   border-radius: 8px;
 }
 
-/* Unterer Bereich: nimmt gesamten Rest des Screens ein */
 .info-section {
   flex-grow: 1;
   background: linear-gradient(129deg, #e57a4c 0%, #f4d384 100%);
@@ -66,7 +64,6 @@ ion-content {
   justify-content: center;
 }
 
-/* Info-Text */
 .weapon-info {
   max-width: 600px;
   margin: 0 auto;

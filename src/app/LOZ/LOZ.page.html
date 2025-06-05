@@ -16,7 +16,7 @@
         show-clear-button="always"
         mode="ios">
         <div class="rectangle-div">
-          <img class="icon" src="../../assets/Monster_Hunter_Pages/filter.png">
+          <img class="icon" src="../../assets/Monster_Hunter_Pages/filter.png" />
         </div>
       </ion-searchbar>
     </div>
@@ -37,31 +37,24 @@
     </div>
 
     <div class="frame-child"></div>
-    <img class="link-1-icon" src="assets/Zelda_bilder/link_1.png">
+    <img class="link-1-icon" src="assets/Zelda_bilder/link_1.png" />
   </div>
 
   <!-- Popular Weapons Title -->
   <div class="popular-weapons">Popular Weapons</div>
 
-  <!-- Weapons Grid -->
+  <!-- Weapons Grid genau wie auf Weapons-Seite -->
   <div class="weapons-grid">
-    <div class="ellipse-container">
-      <div class="ellipse-div"></div>
-      <img class="image-279-icon" src="assets/Zelda_bilder/master_sword.png">
-      <div class="the-master-sword">The Master Sword</div>
-      <div class="rectangle-parent">
-        <div class="group-child"></div>
-        <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png">
-      </div>
-    </div>
-
-    <div class="group-parent">
-      <img class="image-280-icon" src="assets/Zelda_bilder/ancient_sword.png">
-      <div class="ancient-sword">Ancient Sword</div>
-      <div class="frame-child1"></div>
-      <div class="rectangle-group">
-        <div class="group-item"></div>
-        <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png">
+    <div
+      *ngFor="let weapon of weapons"
+      class="item-container"
+      (click)="navigateToDetail(weapon.id)">
+      <p class="item-name">{{ weapon.name | uppercase }}</p>  <!-- Text über dem Bild -->
+      <div class="item-content">
+        <img [src]="weapon.image" alt="{{ weapon.name }}" />
+        <div class="rectangle-parent">
+          <img class="fi-rr-arrow-small-right-icon" src="assets/Zelda_bilder/pfeil.png" />
+        </div>
       </div>
     </div>
   </div>
