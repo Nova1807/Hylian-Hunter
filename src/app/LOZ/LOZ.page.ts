@@ -38,7 +38,7 @@ import { HeaderComponent } from '../header/header.component';
     HttpClientModule, IonList, IonCardContent, IonCardTitle,
     IonCard, IonCardHeader, IonButton, RouterLink,
     IonSearchbar, IonRange, IonSelect, IonSelectOption, IonInput,
-    HeaderComponent
+    HeaderComponent, IonItem, IonLabel
   ],
   providers: [LOZApiService]
 })

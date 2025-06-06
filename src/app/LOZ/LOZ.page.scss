@@ -340,3 +340,76 @@ ion-searchbar {
     clip-path: inset(0 0 0 0);
   }
 }
+
+/* Filter-Bar (rechteck und zentriert) */
+.filter-bar {
+  width: 90%;
+  max-width: 340px;
+  background: rgba(229, 122, 76, 0.2); /* halbtransparentes orangerot */
+  border-radius: 18px;
+  margin: 20px auto 10px auto; /* zentriert mit Abstand oben/unten */
+  padding: 15px 20px;
+  box-shadow: 0 4px 12px rgba(229, 122, 76, 0.4);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom:30px;
+
+  border: 2px solid rgba(255, 255, 255, 0.5); /* Rand für bessere Abgrenzung */
+}
+
+/* Filter Titel */
+.filter-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Labels */
+.filter-bar label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Ort Auswahl transparent machen */
+.filter-bar select {
+  background-color: transparent !important;
+  color: white;
+  border: 1px solid rgba(255 255 255 / 0.5);
+  border-radius: 8px;
+  padding: 6px 10px;
+  -webkit-appearance: none; /* removes default arrow in Safari */
+  -moz-appearance: none; /* removes default arrow in Firefox */
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Pfeil im select transparent und weiß machen */
+.filter-bar select::-ms-expand {
+  display: none;
+}
+
+/* Optionen im Select orange mit weiß */
+.filter-bar select option {
+  background-color: #e57a4c;
+  color: white;
+}
+
+/* ion-range (Schieberegler) Stil anpassen */
+.filter-bar ion-range {
+  --bar-background-active: #e57a4c;
+  --bar-background: #ffc567;
+  --handle-background: #e57a4c;
+  --handle-border-radius: 50%;
+  --handle-box-shadow: 0 2px 6px rgba(229, 122, 76, 0.6);
+}
+
+/* Ionicons mit weiß */
+.filter-bar ion-icon {
+  color: white;
+}
