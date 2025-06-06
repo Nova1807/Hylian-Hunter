@@ -14,7 +14,9 @@
         animated="true"
         placeholder="Search"
         show-clear-button="always"
-        mode="ios">
+        mode="ios"
+        [(ngModel)]="searchTerm"
+        (ionInput)="applyFilters()">
         <div class="rectangle-div">
           <img class="icon" src="../../assets/Monster_Hunter_Pages/filter.png" />
         </div>

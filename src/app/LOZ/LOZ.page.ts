@@ -64,8 +64,6 @@ export class LOZPage implements OnInit {
 
   loadWeapons() {
     this.lOZApiService.getAllWeapons().subscribe((data: any) => {
-      console.log('API Response:', data);
-
       this.allWeapons = data.data.map((w: any) => ({
         id: w.id,
         name: w.name,
