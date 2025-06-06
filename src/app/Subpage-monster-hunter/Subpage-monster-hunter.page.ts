@@ -238,6 +238,8 @@ export class SubpageMonsterHunterPage implements OnInit {
 
   /**
    * Legt das initiale Set an „best weapons“ fest und speichert Schwächen-Map.
+   * Hier wurde die monsterIndex-Abfrage so angepasst, dass bei index < 0
+   * keine Material-Beschränkung erfolgt.
    */
   private calculateBestWeapons(weapons: Weapon[]) {
     // 1) Schwächen-Map erstellen
@@ -247,7 +249,13 @@ export class SubpageMonsterHunterPage implements OnInit {
 
     // 2) Welche Monster sind „verfügbar“ (im MONSTER_ORDER vor dem aktuellen Monster)
     const monsterIndex = MONSTER_ORDER.indexOf(this.monster.name);
-    const availableMonsters = new Set(MONSTER_ORDER.slice(0, monsterIndex));
+    let availableMonsters: Set<string>;
+    if (monsterIndex < 0) {
+      // Monster-Name nicht in MONSTER_ORDER gefunden → keine Material-Beschränkung
+      availableMonsters = new Set<string>();
+    } else {
+      availableMonsters = new Set(MONSTER_ORDER.slice(0, monsterIndex));
+    }
 
     // 3) Alle craftbaren Waffen (rekursiv prüfen)
     const weaponsWithMaterials = weapons.filter((weapon) =>
@@ -271,10 +279,7 @@ export class SubpageMonsterHunterPage implements OnInit {
     );
 
     // 6) Score berechnen, sortieren, Top 6 zurückgeben
-    this.bestWeapons = this.scoreAndSortWeapons(
-      candidateWeapons,
-      this.weaknessMap
-    ).slice(0, 6);
+    this.bestWeapons = this.scoreAndSortWeapons(candidateWeapons, this.weaknessMap).slice(0, 6);
 
     // Initial: gefilterte Liste == alle Top 6
     this.filteredBestWeapons = [...this.bestWeapons];
@@ -295,6 +300,7 @@ export class SubpageMonsterHunterPage implements OnInit {
    * - Wenn `selectedWeaponType === ''`, dann Rückgabe der ursprünglichen Top 6
    * - Sonst: craftbare Waffen dieses Typs ermitteln (mit Fallback auf Iron-Weapon),
    *   Score berechnen und Top 6 nehmen.
+   * Auch hier wird monsterIndex geprüft und bei index < 0 keine Material-Beschränkung verwendet.
    */
   filterWeapons() {
     if (!this.selectedWeaponType) {
@@ -304,17 +310,18 @@ export class SubpageMonsterHunterPage implements OnInit {
 
     const weaknessMap = this.weaknessMap;
     const monsterIndex = MONSTER_ORDER.indexOf(this.monster.name);
-    const availableMonsters = new Set<string>(
-      MONSTER_ORDER.slice(0, monsterIndex)
-    );
+    let availableMonsters: Set<string>;
+    if (monsterIndex < 0) {
+      // Monster-Name nicht in MONSTER_ORDER gefunden → keine Material-Beschränkung
+      availableMonsters = new Set<string>();
+    } else {
+      availableMonsters = new Set<string>(MONSTER_ORDER.slice(0, monsterIndex));
+    }
 
     // zuerst alle craftbaren Waffen dieses Typs
     const weaponsOfTypeAndCraftable = this.allWeapons.filter((weapon) => {
       if (weapon.type !== this.selectedWeaponType) return false;
-      return this.isCraftableWithAvailableMaterials(
-        weapon,
-        availableMonsters
-      );
+      return this.isCraftableWithAvailableMaterials(weapon, availableMonsters);
     });
 
     // Iron-Weapon-Fallback dieses Typs
@@ -327,9 +334,7 @@ export class SubpageMonsterHunterPage implements OnInit {
     );
 
     const candidates =
-      weaponsOfTypeAndCraftable.length > 0
-        ? weaponsOfTypeAndCraftable
-        : ironWeaponsOfType;
+      weaponsOfTypeAndCraftable.length > 0 ? weaponsOfTypeAndCraftable : ironWeaponsOfType;
 
     const scoredSorted = this.scoreAndSortWeapons(candidates, weaknessMap);
     this.filteredBestWeapons = scoredSorted.slice(0, 6);
@@ -421,7 +426,7 @@ export class SubpageMonsterHunterPage implements OnInit {
     const broken = ['gae bolg', 'specific-broken-weapon-id'];
     return (
       !!weapon.assets?.image &&
-      !broken.includes(weapon.name.toLowerCase()) &&
+      !broken.includes(weapon.name.toLocaleLowerCase()) &&
       !broken.includes(weapon.id.toString())
     );
   }
