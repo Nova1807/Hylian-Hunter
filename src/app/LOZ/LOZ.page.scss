@@ -215,18 +215,16 @@
 /* Pfeil-Kästchen */
 .rectangle-parent {
   align-self: flex-end;
-  width: 40px;
-  height: 29px;
+  width: 35px;
+  height: 35px;
   margin-top: -5px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #ec8e53, #f8b05f 50.5%, #e57a4c);
-  border-radius: 16px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(180deg, #e57a4c, #ffc567);
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
 .rectangle-parent:hover {
@@ -235,11 +233,11 @@
 
 /* Pfeil-Icon */
 .fi-rr-arrow-small-right-icon {
-  width: 20px;
-  height: 20px;
-  opacity: 0.7;
-  margin: 0;
-  object-fit: contain;
+  //height: 10px;
+  //width: 200px;
+  margin-top:-10px;
+  margin: 8px;
+  align-self: flex-start;
 }
 
 .item-name {
