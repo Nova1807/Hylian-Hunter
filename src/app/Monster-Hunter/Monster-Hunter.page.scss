@@ -1,148 +1,354 @@
-/* Global Ionic Overrides */
-ion-content {
+ion-app {
+  background-color: #201515;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Responsive Container */
+ion-content.monster-content {
   --background: #201515;
-  --padding: 0;
   --color: #eee;
-  font-family: 'Otomanopee One';
+  font-family: 'Otomanopee One', sans-serif;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .inner-container {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
+
+    @media (min-width: 480px) {
+      padding: 0 20px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 0 24px;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 0 28px;
+    }
+
+    @media (min-width: 1400px) {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+  }
 }
 
 /* Header Styles */
 .header {
-  padding: 16px 20px;
+  background-color: #201515;
+  padding: 1.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (min-width: 768px) {
+    padding: 2rem 0;
+  }
 }
 
 .title {
-  font-size: 22px;
+  font-size: 1.6rem;
   letter-spacing: 0.05em;
-  margin-bottom: 16px;
+  margin-bottom: 1.2rem;
+  color: #eee;
+  padding: 0 8px;
+  margin-left: 30px;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding: 0;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 2.2rem;
+  }
 }
 
 .search-container {
   display: flex;
-  gap: 10px;
+  gap: 0.8rem;
+  align-items: center;
+  width: 100%;
+  padding: 0 4px;
+
+
+  @media (min-width: 768px) {
+    padding: 0;
+  }
 }
 
 .search-bar {
-  background: var(#68514c);
   flex: 1;
   background: #68514c;
   border-radius: 12px;
-  padding: 5px 15px;
+  padding: 0.5rem;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  margin-left: 25px;
 
-  .search-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
+  ion-searchbar {
+    width: 100%;
+    --background: transparent;
+    --box-shadow: none;
+    --border-radius: 0;
+    --color: #eee;
+    --placeholder-color: rgba(255, 255, 255, 0.5);
+    --icon-color: rgba(255, 255, 255, 0.5);
+    padding: 0 4px;
 
-  .search-input {
-    background: transparent;
-    border: none;
-    color: #eee;
-    flex: 1;
-    font-family: 'Inter';
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+    @media (min-width: 768px) {
+      padding: 0;
     }
   }
 }
 
 .filter-button {
-  background: #68514c;
-  border-radius: 12px;
-  width: 40px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --background: #68514c;
+  --background-activated: #5C4945;
+  --background-hover: #7a615b;
+  --border-radius: 12px;
+  --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 3.5rem;
+  height: 3.5rem;
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-right: 25px;
+
+  @media (min-width: 768px) {
+    width: 4rem;
+    height: 4rem;
+  }
 
   .filter-icon {
-    width: 23px;
-    height: 23px;
-    opacity: 0.7;
+    width: 1.8rem;
+    height: 1.8rem;
+    object-fit: fill;
+
+    @media (min-width: 768px) {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 }
 
-/* Main Monster Card */
 .main-monster-card {
   position: relative;
-  margin: 20px;
   background: linear-gradient(106.15deg, #736461 8.25%, #28201e 87.5%);
   box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.2);
   border-radius: 18px;
-  height: 186px;
+  min-height: 12rem;
+  aspect-ratio: 1.8 / 1;
   overflow: hidden;
-  padding: 15px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  width: calc(90% - 20px); /* 10px auf jeder Seite */
+  margin: 0 10px;
+  box-sizing: border-box;
 
-  .monster-name {
-    font-size: 23px;
-    letter-spacing: 0.05em;
-    position: relative;
-    z-index: 2;
+  @media (min-width: 768px) {
+    min-height: 15rem;
+    width: calc(100% - 40px); /* 20px auf jeder Seite */
+    margin: 0 20px;
   }
 
-  .monster-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 41px;
-    height: 41px;
-    z-index: 2;
-  }
-
-  .monster-image {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: auto;
+  @media (min-width: 1024px) {
+    min-height: 18rem;
+    max-width: 90%; /* Oder Ihre gewünschte Maximalbreite */
+    margin: 0 auto;
+    width: calc(100% - 40px);
   }
 }
 
-/* Similar Monsters Section */
+.monster-name {
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+  position: relative;
+  z-index: 2;
+  color: #eee;
+  padding: 0 4px;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    padding: 0;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 2.2rem;
+  }
+}
+
+.monster-badge {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+  margin-bottom: 0.8rem;
+  position: relative;
+  z-index: 2;
+
+  @media (min-width: 768px) {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.monster-image {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: auto;
+  max-width: 60%;
+  z-index: 1;
+  object-fit: contain;
+}
+
+.monster-details {
+  position: relative;
+  z-index: 2;
+  font-size: 0.9rem;
+  color: #eee;
+  padding: 0 4px;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1.1rem;
+  }
+}
+
+
 .section-title {
   font-size: 23px;
   letter-spacing: 0.05em;
-  margin: 30px 20px 15px;
+  color: #eee;
+  width: 100%;
+  margin-left: 30px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    font-size: 25px;
+    margin-left: 30px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 27px;
+    margin-left: 30px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;  }
 }
 
 .similar-monsters-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 18px;
   padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @media (min-width: 480px) {
+    gap: 20px;
+  }
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 25px;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    padding: 0 30px;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 25px;
+    padding: 0 35px;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    padding: 0 40px;
+  }
 }
 
 .monster-tile {
   background: linear-gradient(180deg, #736461, #28201e);
   box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
-  height: 222px;
   position: relative;
   overflow: hidden;
+  height: 0;
+  padding-bottom: 130%;
+  box-sizing: border-box;
 
   .monster-tile-image {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 160px;
-    height: 160px;
+    max-width: 80%;
+    max-height: 80%;
+    width: auto;
+    height: auto;
     object-fit: contain;
   }
 
-
   .monster-tile-name {
     position: absolute;
-    bottom: 15px;
-    left: 15px;
-    font-size: 17.65px;
+    bottom: 0.8rem;
+    left: 0.8rem;
+    font-size: 1.2rem;
     letter-spacing: 1.11px;
+    z-index: 2;
+    color: #eee;
+    padding: 0 4px;
+
+    @media (min-width: 768px) {
+      font-size: 1.3rem;
+      padding: 0;
+    }
+  }
+
+  .monster-tile-badge {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: contain;
+    z-index: 2;
+
+    @media (min-width: 768px) {
+      width: 3rem;
+      height: 3rem;
+    }
   }
 }
 
@@ -152,120 +358,90 @@ ion-content {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 10px 0;
+  padding: 0.8rem 0;
   border-top: none;
+  background-color: #201515;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  z-index: 100;
+
+  .tab-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+
+    @media (min-width: 480px) {
+      padding: 0 20px;
+    }
+
+    @media (min-width: 768px) {
+      max-width: 80%;
+      padding: 0;
+    }
+
+    @media (min-width: 1024px) {
+      max-width: 70%;
+    }
+  }
 
   ion-tab-button {
     --background: transparent;
+    flex: 0 1 auto;
+    max-width: 80px;
+    margin: 0;
 
     img {
-      height: 30px;
+      height: 2.2rem;
+      max-height: 100%;
+      width: auto;
+
+      @media (min-width: 768px) {
+        height: 2.5rem;
+      }
     }
   }
 }
-.filter-button {
-  --background: #68514c;
-  --background-activated: #5C4945;
-  --background-hover: #7a615b;
-  --border-radius: 12px;
-  --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  margin: 0;
-  --padding-start: 0;
-  --padding-end: 0;
 
-  .filter-icon {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-  }
-}
-/* Add to your SCSS file */
-.monster-tile-image {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
+/* Skeleton Loading */
 .skeleton-loading {
   ion-skeleton-text {
-    background: rgba(var(--ion-color-medium-rgb), 0.2);
+    --background-rgb: 120, 100, 97;
+    --border-radius: 8px;
   }
 }
 
 .monster-tile.skeleton-item {
-  background: rgba(var(--ion-color-light-rgb), 0.3);
-  border-radius: 8px;
-  padding: 12px;
-}
-/* Add to your component's SCSS */
-ion-searchbar {
-  isolation: isolate;
-  background: #68514c;
-  --color: inherit !important;
+  background: rgba(115, 100, 97, 0.3);
 }
 
-.monster-tile-badge{
-  margin-top: 5px;
-  margin-bottom: 10px;
-  top: 10%;
-  left: 10%;
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  width: 100%;
 }
-.monster-badge{
-  margin-bottom: 10px;
-  top: 10%;
-  left: 10%;
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-}
-/* Main Monster Card */
-.main-monster-card {
-  position: relative;
-  margin: 20px;
-  background: linear-gradient(106.15deg, #736461 8.25%, #28201e 87.5%);
-  box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.2);
-  border-radius: 18px;
-  height: 186px;
-  overflow: hidden;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
 
-  .monster-name {
-    font-size: 23px;
-    letter-spacing: 0.05em;
-    margin-bottom: 10px; /* Add some space between name and badge */
-    order: 2; /* This will make it appear after the badge */
-  }
+/* Popover Responsive */
+ion-popover {
+  --width: 90%;
+  --max-width: 400px;
 
-  .monster-badge {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    margin-bottom: 10px;
-    order: 1; /* This will make it appear first */
-    position: static; /* Remove absolute positioning */
-  }
-
-  .monster-image {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: auto;
-    z-index: 1;
-  }
-
-  .monster-details {
-    order: 3; /* This will make it appear last */
-    position: relative;
-    z-index: 2;
+  @media (min-width: 768px) {
+    --width: 50%;
+    --max-width: 500px;
   }
 }
+
+ion-infinite-scroll {
+  margin-top: 1.5rem;
+  padding: 0;
+  width: 100%;
+}
+
+
+

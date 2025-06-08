@@ -3,7 +3,6 @@
     <!-- Back Button -->
     <div class="back-button-wrapper">
       <ion-buttons slot="start">
-        <!-- Klickt man hierauf, geht es eine Ansicht zurück -->
         <ion-button class="custom-back-button" (click)="goBack()">
           <img src="assets/Subpage-Monster-Hunter/Arrow.png" class="arrow-icon" alt="Back">
         </ion-button>
@@ -19,6 +18,9 @@
         <div class="description-container">
           <p class="description">{{ monster?.description }}</p>
           <p class="detail-item"><strong>Species:</strong> {{ monster?.species }}</p>
+          <p class="detail-item"><strong>Type:</strong> {{ monster?.type }}</p>
+          <p class="detail-item"><strong>Elements:</strong> {{ monster?.elements?.join(', ') || 'None' }}</p>
+          <p class="detail-item"><strong>Additional Info:</strong> {{ monster?.additionalInfo }}</p>
         </div>
 
         <div class="weakness-section">
@@ -27,6 +29,22 @@
             <li *ngFor="let weakness of monster?.weaknesses" class="weakness-item">
               {{ weakness.element }} ({{ weakness.stars }}★)
             </li>
+          </ul>
+        </div>
+
+        <div *ngIf="monster?.resistances?.length">
+          <h3 class="subsection-title">Resistances:</h3>
+          <ul class="weakness-list">
+            <li *ngFor="let resistance of monster?.resistances" class="weakness-item">
+              {{ resistance.element }} <span *ngIf="resistance.condition">({{ resistance.condition }})</span>
+            </li>
+          </ul>
+        </div>
+
+        <div *ngIf="monster?.locations?.length">
+          <h3 class="subsection-title">Locations:</h3>
+          <ul>
+            <li *ngFor="let location of monster?.locations" class="weakness-item">{{ location.name }} ({{ location.zoneCount }} zones)</li>
           </ul>
         </div>
 
@@ -84,12 +102,9 @@
             <ng-template>
               <ion-content>
                 <ion-list lines="full">
-                  <!-- Hier nur die Waffen-Typen in einer ion-select, ohne extra Label -->
                   <ion-item>
                     <ion-select [(ngModel)]="selectedWeaponType" (ionChange)="handleSelectChange()">
-                      <!-- „All Types“-Option -->
                       <ion-select-option value="">All Types</ion-select-option>
-                      <!-- Für jeden weaponTypes-Eintrag -->
                       <ion-select-option *ngFor="let type of weaponTypes" [value]="type">
                         {{ type }}
                       </ion-select-option>
@@ -102,7 +117,7 @@
         </div>
 
         <div *ngIf="!isWeaponsLoading; else weaponsLoading">
-          <div class="weapons-grid">
+          <div *ngIf="filteredBestWeapons.length > 0; else noWeapons" class="weapons-grid">
             <div class="weapon-card" *ngFor="let weapon of filteredBestWeapons" (click)="showWeapon(weapon)">
               <div class="weapon-bg-glow"></div>
               <img [src]="weapon.assets?.image || 'assets/placeholder-weapon.png'"
@@ -112,6 +127,12 @@
               <ion-icon name="star" class="star-icon"></ion-icon>
             </div>
           </div>
+          <ng-template #noWeapons>
+            <div class="no-weapons-warning">
+              <p>Could not load best weapons. Showing fallback weapons.</p>
+              <ion-button (click)="loadFallbackWeapons()">Load Basic Weapons</ion-button>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -127,20 +148,20 @@
       <div class="info-section">
         <div class="description-container">
           <p class="detail-item"><strong>Type:</strong> {{ selectedWeapon.type }}</p>
-          <p class="detail-item"><strong>Attack Power:</strong> {{ selectedWeapon.attack?.raw || 'N/A' }}</p>
+          <p class="detail-item"><strong>Attack Power:</strong> {{ selectedWeapon.attack?.display || selectedWeapon.attack?.raw || 'N/A' }}</p>
+          <p class="detail-item"><strong>Rarity:</strong> {{ selectedWeapon.rarity }} ★</p>
+          <p class="detail-item"><strong>Display Attack:</strong> {{ selectedWeapon.attack?.display || 'N/A' }}</p>
 
           <div *ngIf="selectedWeapon.elements?.length">
             <p class="subsection-title">Elements:</p>
             <ul class="weakness-list">
               <li *ngFor="let element of selectedWeapon.elements" class="weakness-item">
                 {{ element.type }}: {{ element.damage }}
+                <span *ngIf="element.hidden">(hidden)</span>
               </li>
             </ul>
           </div>
-        </div>
-        <div class="weakness-section">
-          <h3 class="subsection-title">Effectiveness against {{ monster?.name }}:</h3>
-          <p class="detail-item">Combat Score: {{ selectedWeapon.score }}</p>
+
         </div>
         <!-- Add Materials Section -->
         <div class="drops-section" *ngIf="selectedWeapon.crafting">
@@ -160,7 +181,16 @@
             <div class="no-drops">No materials required</div>
           </ng-template>
         </div>
-        <!-- Add after the materials section -->
+
+        <div *ngIf="selectedWeapon.slots?.length">
+          <h3 class="subsection-title">Decoration Slots:</h3>
+          <div class="slots-container">
+            <span *ngFor="let slot of selectedWeapon.slots" class="slot-icon">
+              {{ slot.rank }} ⬡
+            </span>
+          </div>
+        </div>
+
         <div class="upgrades-section" *ngIf="upgradedWeapons.length > 0">
           <h3 class="subsection-title">Upgraded Versions</h3>
 
